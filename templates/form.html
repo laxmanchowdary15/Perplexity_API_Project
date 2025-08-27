@@ -1,180 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Model Paper Generator</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <main class="container" role="main" aria-labelledby="pageTitle">
-    <h1 id="pageTitle" tabindex="0">
-      🎉 Model Paper Generator 🎉 
-      <small>(Just for Class 10 - Stay tuned!) 🚀</small>
-    </h1>
+{% extends "base.html" %}
 
-    <form id="paperForm" aria-describedby="formInstructions" novalidate>
-      <p id="formInstructions" class="sr-only">
-        Fill in the form below to generate your model paper PDF.
-      </p>
+{% block content %}
+<main class="container" role="main" aria-labelledby="pageTitle">
+  <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Just for Class 10 - Stay tuned!) 🚀</small></h1>
 
-      <!-- Subject -->
-      <fieldset>
-        <legend>📚 Choose Your Subject</legend>
-        <label for="subject" class="sr-only">Subject</label>
-        <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
-          <option value="" disabled selected>Pick a subject</option>
-          <option value="Maths">Maths ➗</option>
-          <option value="Science">Science 🔬</option>
-          <option value="Social">Social Studies 🌍</option>
-          <option value="English">English 📖</option>
-        </select>
-        <small id="subjectHint" class="hint-text">Select one subject to proceed</small>
-      </fieldset>
+  <form id="paperForm" aria-describedby="formInstructions" novalidate>
+    <p id="formInstructions" class="sr-only">Fill in the form below to generate your model paper PDF.</p>
 
-      <!-- Chapter -->
-      <fieldset>
-        <legend>📖 Select a Chapter</legend>
-        <label for="chapter" class="sr-only">Chapter</label>
-        <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
-          <option value="" disabled selected>Choose a chapter...</option>
-        </select>
-        <small id="chapterHint" class="hint-text">Choose a chapter based on selected subject</small>
-      </fieldset>
+    <fieldset>
+      <legend>📚 Choose Your Subject</legend>
+      <label for="subject" class="sr-only">Subject</label>
+      <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
+        <option value="" disabled selected>Pick a subject</option>
+        <option value="Maths">Maths ➗</option>
+        <option value="Science">Science 🔬</option>
+        <option value="Social">Social Studies 🌍</option>
+        <option value="English">English 📖</option>
+      </select>
+      <small id="subjectHint" class="hint-text">Select one subject to proceed</small>
+    </fieldset>
 
-      <!-- Difficulty -->
-      <fieldset>
-        <legend>🎯 Difficulty Level</legend>
-        <label for="difficulty" class="sr-only">Difficulty</label>
-        <select name="difficulty" id="difficulty" required aria-required="true" aria-describedby="difficultyHint">
-          <option value="easy">Easy Peasy 🍋</option>
-          <option value="moderate" selected>Moderate 🎯</option>
-          <option value="difficult">Challenge Mode 💥</option>
-        </select>
-        <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
-      </fieldset>
+    <fieldset>
+      <legend>📖 Select a Chapter</legend>
+      <label for="chapter" class="sr-only">Chapter</label>
+      <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
+        <option value="" disabled selected>Choose a chapter...</option>
+      </select>
+      <small id="chapterHint" class="hint-text">Choose a chapter based on selected subject</small>
+    </fieldset>
 
-      <!-- Suggestions -->
-      <fieldset class="floating-label">
-        <textarea name="suggestions" id="suggestions" rows="4" placeholder=" "></textarea>
-        <label for="suggestions">📝 Any extra requirements? (Optional)</label>
-      </fieldset>
+    <fieldset>
+      <legend>🎯 Difficulty Level</legend>
+      <label for="difficulty" class="sr-only">Difficulty</label>
+      <select name="difficulty" id="difficulty" required aria-required="true" aria-describedby="difficultyHint">
+        <option value="easy">Easy Peasy 🍋</option>
+        <option value="moderate" selected>Moderate 🎯</option>
+        <option value="difficult">Challenge Mode 💥</option>
+      </select>
+      <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
+    </fieldset>
 
-      <!-- Submit Button -->
-      <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
-        Generate PDF &amp; Download 🚀
-      </button>
-    </form>
+    <fieldset class="floating-label">
+      <textarea name="suggestions" id="suggestions" rows="4" placeholder=" "></textarea>
+      <label for="suggestions">📝 Any extra requirements? (Optional)</label>
+    </fieldset>
 
-    <!-- Contact Info -->
-    <p class="contact-info" aria-label="Contact information">
-      🛠️ Issues? Contact <strong>Laxman Nimmagadda</strong> at
-      <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
-    </p>
+    <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
+      Generate PDF &amp; Download 🚀
+    </button>
 
-    <!-- Modal -->
-    <div id="loadingModal" class="modal" role="alertdialog" aria-modal="true" aria-hidden="true" aria-live="assertive">
-      <div class="modal-content">⏳ Generating your PDF, please wait...</div>
-    </div>
+  </form>
 
-    <!-- Error Message -->
-    <div id="errorMessage" class="error-message" role="alert" aria-live="assertive" style="display:none;">
-      ❌ Something went wrong. Please try again.
-    </div>
-  </main>
+  <p class="contact-info" aria-label="Contact information">
+    🛠️ Issues? Contact <strong>Laxman Nimmagadda</strong> at
+    <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
+  </p>
 
-  <script>
-    const chaptersBySubject = {
-      "Maths": [
-        "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
-        "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
-        "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
-        "Circles", "Constructions", "Areas Related to Circles", "Surface Areas and Volumes", 
-        "Statistics", "Probability"
-      ],
-      "Science": [
-        "Chemical Reactions and Equations", "Acids, Bases, and Salts", "Metals and Non-Metals",
-        "Carbon and Its Compounds", "Periodic Classification of Elements", "Life Processes",
-        "Control and Coordination", "How do Organisms Reproduce?", "Heredity and Evolution",
-        "Light – Reflection and Refraction", "The Human Eye and the Colourful World", "Electricity",
-        "Magnetic Effects of Electric Current", "Sources of Energy"
-      ],
-      "Social": [
-        "Nationalism in India", "The Making of a Global World", "The Age of Industrialization",
-        "Print Culture and the Modern World", "Resources and Development", "Forest and Wildlife Resources",
-        "Water Resources", "Agriculture", "Minerals and Energy Resources", "Manufacturing Industries",
-        "Lifelines of National Economy", "Power Sharing", "Federalism", "Democracy and Diversity",
-        "Gender, Religion and Caste", "Popular Struggles and Movements", "Political Parties",
-        "Outcomes of Democracy", "Challenges to Democracy"
-      ],
-      "English": [
-        "A Letter to God", "Nelson Mandela: Long Walk to Freedom", "Two Stories about Flying",
-        "From the Diary of Anne Frank", "Glimpses of India", "Mijbil the Otter",
-        "Madam Rides the Bus", "The Hundred Dresses", "The Hundred Dresses – II",
-        "A Baker from Goa", "Amanda", "Animals", "The Trees", "Fog", "The Tale of Custard the Dragon",
-        "The Ball Poem", "The Invisible Man", "The Treasure within", "Footprints without Feet",
-        "The Magic Drum and Other Favourite Stories", "The Necklace", "The Hack Driver",
-        "Bholi", "The Book that Saved the Earth"
-      ]
-    };
+  <!-- Modal -->
+  <div id="loadingModal" class="modal" role="alertdialog" aria-modal="true" aria-hidden="true" aria-live="assertive">
+    <div class="modal-content">⏳ Generating your PDF, please wait...</div>
+  </div>
 
-    const subjectSelect = document.getElementById('subject');
-    const chapterSelect = document.getElementById('chapter');
+  <!-- Error Message -->
+  <div id="errorMessage" class="error-message" role="alert" aria-live="assertive" style="display:none;">
+    ❌ Something went wrong. Please try again.
+  </div>
+</main>
 
-    subjectSelect.addEventListener('change', () => {
-      const subject = subjectSelect.value;
-      chapterSelect.innerHTML = '<option value="" disabled selected>Choose a chapter...</option>';
-      if (chaptersBySubject[subject]) {
-        chaptersBySubject[subject].forEach(chapter => {
-          const option = document.createElement('option');
-          option.value = chapter;
-          option.textContent = chapter;
-          chapterSelect.appendChild(option);
-        });
-        chapterSelect.disabled = false;
-      } else {
-        chapterSelect.disabled = true;
+<script>
+  const chaptersBySubject = {
+    "Maths": [
+      "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
+      "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
+      "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
+      "Circles", "Constructions", "Areas Related to Circles", "Surface Areas and Volumes", 
+      "Statistics", "Probability"
+    ],
+    "Science": [
+      "Chemical Reactions and Equations", "Acids, Bases, and Salts", "Metals and Non-Metals",
+      "Carbon and Its Compounds", "Periodic Classification of Elements", "Life Processes",
+      "Control and Coordination", "How do Organisms Reproduce?", "Heredity and Evolution",
+      "Light – Reflection and Refraction", "The Human Eye and the Colourful World", "Electricity",
+      "Magnetic Effects of Electric Current", "Sources of Energy"
+    ],
+    "Social": [
+      "Nationalism in India", "The Making of a Global World", "The Age of Industrialization",
+      "Print Culture and the Modern World", "Resources and Development", "Forest and Wildlife Resources",
+      "Water Resources", "Agriculture", "Minerals and Energy Resources", "Manufacturing Industries",
+      "Lifelines of National Economy", "Power Sharing", "Federalism", "Democracy and Diversity",
+      "Gender, Religion and Caste", "Popular Struggles and Movements", "Political Parties",
+      "Outcomes of Democracy", "Challenges to Democracy"
+    ],
+    "English": [
+      "A Letter to God", "Nelson Mandela: Long Walk to Freedom", "Two Stories about Flying",
+      "From the Diary of Anne Frank", "Glimpses of India", "Mijbil the Otter",
+      "Madam Rides the Bus", "The Hundred Dresses", "The Hundred Dresses – II",
+      "A Baker from Goa", "Amanda", "Animals", "The Trees", "Fog", "The Tale of Custard the Dragon",
+      "The Ball Poem", "The Invisible Man", "The Treasure within", "Footprints without Feet",
+      "The Magic Drum and Other Favourite Stories", "The Necklace", "The Hack Driver",
+      "Bholi", "The Book that Saved the Earth"
+    ]
+  };
+
+  const subjectSelect = document.getElementById('subject');
+  const chapterSelect = document.getElementById('chapter');
+
+  subjectSelect.addEventListener('change', () => {
+    const subject = subjectSelect.value;
+    chapterSelect.innerHTML = '<option value="" disabled selected>Choose a chapter...</option>';
+    if (chaptersBySubject[subject]) {
+      chaptersBySubject[subject].forEach(chapter => {
+        const option = document.createElement('option');
+        option.value = chapter;
+        option.textContent = chapter;
+        chapterSelect.appendChild(option);
+      });
+      chapterSelect.disabled = false;
+    } else {
+      chapterSelect.disabled = true;
+    }
+  });
+
+  const form = document.getElementById('paperForm');
+  const button = document.getElementById('generateBtn');
+  const modal = document.getElementById('loadingModal');
+  const errorBox = document.getElementById('errorMessage');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'false');
+    modal.style.display = 'flex';
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+
+    const formData = new FormData(form);
+    try {
+      const response = await fetch("/", { method: "POST", body: formData });
+      if (!response.ok || !response.headers.get('Content-Type').includes('application/pdf')) {
+        throw new Error("Invalid response");
       }
-    });
-
-    const form = document.getElementById('paperForm');
-    const button = document.getElementById('generateBtn');
-    const modal = document.getElementById('loadingModal');
-    const errorBox = document.getElementById('errorMessage');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorBox.style.display = 'none';
-      modal.setAttribute('aria-hidden', 'false');
-      modal.style.display = 'flex';
-      button.disabled = true;
-      button.setAttribute('aria-busy', 'true');
-
-      const formData = new FormData(form);
-      try {
-        const response = await fetch("/", { method: "POST", body: formData });
-        if (!response.ok || !response.headers.get('Content-Type').includes('application/pdf')) {
-          throw new Error("Invalid response");
-        }
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const filename = response.headers.get('Content-Disposition')?.split('filename=')[1] || 'model_paper.pdf';
-        a.href = url;
-        a.download = filename.replace(/["']/g, '');
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      } catch (err) {
-        errorBox.style.display = 'block';
-      } finally {
-        modal.setAttribute('aria-hidden', 'true');
-        modal.style.display = 'none';
-        button.disabled = false;
-        button.setAttribute('aria-busy', 'false');
-      }
-    });
-  </script>
-</body>
-</html>
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const filename = response.headers.get('Content-Disposition')?.split('filename=')[1] || 'model_paper.pdf';
+      a.href = url;
+      a.download = filename.replace(/["']/g, '');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      errorBox.style.display = 'block';
+    } finally {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.style.display = 'none';
+      button.disabled = false;
+      button.setAttribute('aria-busy', 'false');
+    }
+  });
+</script>
+{% endblock %}
