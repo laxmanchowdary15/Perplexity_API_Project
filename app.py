@@ -131,8 +131,14 @@ def generate_paper(subject, chapter, difficulty,suggestions):
     prompt = (
         f"Create a model paper for class 10 {subject}, "
         f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-        "C (2x4), D (1x4), with suitable questions. Some extra requirement are ",f"{suggestions}" "Use plain text and clean mathematical symbols. "
-        "Avoid LaTeX, avoid \\( \\), avoid $$. Use superscripts (x²), fractions (a/b), etc. Make questions strictly based difficulty level but add one difficult question in all levels.Follow the qustions format and syllabus of andhra pradesh board for all classes and formats.Give response as exam question paper no hint or extra descriptions in response of any kind, since response is being printed as pdf."
+        "C (2x4), D (1x4), with suitable questions. Some extra requirement are "
+        + suggestions + " "
+        "Use plain text and clean mathematical symbols. "
+        "Avoid LaTeX, avoid \\( \\), avoid $$. Use superscripts (x²), fractions (a/b), etc. "
+        "Make questions strictly based difficulty level but add one difficult question in all levels. "
+        "Follow the questions format and syllabus of Andhra Pradesh board for all classes and formats. "
+        "Give response as exam question paper no hint or extra descriptions in response of any kind, "
+        "since response is being printed as pdf."
     )
     response = client.chat.completions.create(
         model="sonar-pro",
