@@ -20,20 +20,18 @@ def generate_paper(subject, chapter, difficulty):
 def create_exam_pdf(text, subject, chapter):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Courier", size=12)  # Using Courier for monospaced and safe encoding
+    pdf.set_font("Courier", size=12)  # Monospaced font to avoid encoding issues
 
     # Header
     header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 10, header, ln=1, align="C")
     pdf.ln(5)
 
-    # Add text line by line
-    lines = text.split('\n')
-    for line in lines:
-        # Write multi-cell to handle long lines properly
+    # Add text lines using multi_cell for wrapping
+    for line in text.split('\n'):
         pdf.multi_cell(0, 8, line)
 
-    # Output PDF as bytes
+    # Output PDF as bytes with latin-1 encoding, replacing unsupported characters
     pdf_output = pdf.output(dest='S').encode('latin-1', 'replace')
     return pdf_output
 
