@@ -2,11 +2,15 @@ from flask import Flask, render_template, request, Response
 import os
 from openai import OpenAI
 from fpdf import FPDF, XPos, YPos
-import io
+import io,re
 
 app = Flask(__name__)
 client = OpenAI(api_key=os.environ.get("PERPLEXITY_API_KEY"), base_url="https://api.perplexity.ai")
-
+def clean_math_latex(text):
+    # Replace \( ... \) or $ ... $ with inner content
+    text = re.sub(r"\\\((.*?)\\\)", r"\1", text)
+    text = re.sub(r"\$(.*?)\$", r"\1", text)
+    return text
 def generate_paper(subject, chapter, difficulty):
     prompt = (
         f"Create a model paper for class 10 {subject}, "
@@ -19,29 +23,74 @@ def generate_paper(subject, chapter, difficulty):
     )
     return response.choices[0].message.content
 
-def create_exam_pdf(text, subject, chapter):
+# def create_exam_pdf(text, subject, chapter):
+#     pdf = FPDF()
+#     pdf.add_page()
+
+#     pdf.set_margins(10, 10, 10)
+#     font_path = os.path.join(os.path.dirname(__file__), 'static', 'fonts', 'DejaVuSans.ttf')
+#     pdf.add_font('DejaVu', '', font_path)  # Removed deprecated uni=True
+#     pdf.set_font("DejaVu", size=12)
+
+#     page_width = pdf.w - 2 * pdf.l_margin
+
+#     header = f"Class 10 Model Paper - {subject} - {chapter}"
+#     pdf.cell(0, 10, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")  # Updated ln param
+#     pdf.ln(5)
+
+#     for line in text.split('\n'):
+#         if line.strip() == "":
+#             pdf.ln(5)
+#         else:
+#             pdf.multi_cell(page_width, 8, line)
+
+#     pdf_bytes = pdf.output()  # Removed dest param (deprecated)
+#     return bytes(pdf_bytes)  # Convert bytearray to bytes
+def create_exam_pdf(textuc, subject, chapter):
+    text = clean_math_latex(textuc)
     pdf = FPDF()
     pdf.add_page()
-
-    pdf.set_margins(10, 10, 10)
+    pdf.set_margins(15, 15, 15)
+    
     font_path = os.path.join(os.path.dirname(__file__), 'static', 'fonts', 'DejaVuSans.ttf')
-    pdf.add_font('DejaVu', '', font_path)  # Removed deprecated uni=True
-    pdf.set_font("DejaVu", size=12)
-
+    pdf.add_font('DejaVu', '', font_path)
+    pdf.add_font('DejaVu', 'B', font_path)
+    
     page_width = pdf.w - 2 * pdf.l_margin
 
+    # Title
+    pdf.set_font("DejaVu", 'B', 16)
     header = f"Class 10 Model Paper - {subject} - {chapter}"
-    pdf.cell(0, 10, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")  # Updated ln param
-    pdf.ln(5)
+    pdf.cell(0, 12, header, ln=True, align="C")
+    pdf.ln(10)
 
-    for line in text.split('\n'):
-        if line.strip() == "":
+    # Parse the text line by line for sections and questions
+    lines = text.split('\n')
+    for line in lines:
+        line = line.strip()
+        if not line:
             pdf.ln(5)
-        else:
-            pdf.multi_cell(page_width, 8, line)
+            continue
 
-    pdf_bytes = pdf.output()  # Removed dest param (deprecated)
-    return bytes(pdf_bytes)  # Convert bytearray to bytes
+        # Check if line is a section header (simple heuristic: starts with '**Section')
+        if line.startswith("**Section"):
+            # Clean the line from markdown asterisks
+            section_title = line.replace("**", "")
+            pdf.set_font("DejaVu", 'B', 14)
+            pdf.cell(0, 10, section_title, ln=True)
+            pdf.ln(3)
+        else:
+            # Regular question or text
+            pdf.set_font("DejaVu", '', 12)
+            pdf.multi_cell(page_width, 6, line)
+            pdf.ln(2)
+    
+    pdf.ln(10)
+    pdf.set_font("DejaVu", 'I', 12)
+    pdf.cell(0, 10, "*End of Paper*", ln=True, align="C")
+
+    pdf_bytes = pdf.output(dest='S').encode('latin1')  # output as bytes string
+    return pdf_bytes
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
