@@ -1,54 +1,3 @@
-<!-- {% extends "base.html" %}
-
-{% block content %}
-<h1>🎉 Class 10 Model Paper Generator 🎉</h1>
-<form method="post" action="/">
-  <label for="subject">📚 Choose Your Subject</label>
-  <select name="subject" id="subject" required>
-    <option value="" disabled selected>Pick a subject!</option>
-    <option value="Maths">Maths ➗</option>
-    <option value="Science">Science 🔬</option>
-    <option value="Social">Social Studies 🌍</option>
-    <option value="English">English 📖</option>
-  </select>
-
-  <label for="chapter">📖 Select a Chapter</label>
-  <select name="chapter" id="chapter" required>
-    <option value="" disabled selected>Choose a chapter...</option>
-  </select>
-
-  <label for="difficulty">🎯 How tough should it be?</label>
-  <select name="difficulty" id="difficulty" required>
-    <option value="easy">Easy Peasy 🍋</option>
-    <option value="moderate">Moderate 🎯</option>
-    <option value="difficult">Challenge Mode 💥</option>
-  </select>
-
-  <button type="submit">Generate PDF & Download 🚀</button>
-</form>
-
-<script>
-  // Populate chapters based on selected subject
-  const subjectSelect = document.getElementById('subject');
-  const chapterSelect = document.getElementById('chapter');
-
-  subjectSelect.addEventListener('change', () => {
-    const subject = subjectSelect.value;
-    const chapters = getChapters(subject);
-
-    // Clear previous chapters
-    chapterSelect.innerHTML = '<option value="" disabled selected>Choose a chapter...</option>';
-
-    // Add new chapters
-    chapters.forEach(chapter => {
-      const option = document.createElement('option');
-      option.value = chapter;
-      option.textContent = chapter;
-      chapterSelect.appendChild(option);
-    });
-  });
-</script>
-{% endblock %} -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -80,14 +29,14 @@
 </form>
 
 <!-- Modal -->
-<div id="loadingModal" class="modal">
-  <div class="modal-content">
+<div id="loadingModal" class="modal" style="display:none; align-items:center; justify-content:center; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+  <div class="modal-content" style="background:#fff; padding:20px; border-radius:8px; font-size:1.2rem;">
     ⏳ Generating your PDF, please wait...
   </div>
 </div>
 
 <!-- Error Message -->
-<div id="errorMessage" class="error-message">
+<div id="errorMessage" class="error-message" style="display:none; color:red; margin-top:10px;">
   ❌ Something went wrong. Please try again.
 </div>
 
@@ -182,4 +131,3 @@
   });
 </script>
 {% endblock %}
-
