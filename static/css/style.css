@@ -1,4 +1,4 @@
-/* Reset */
+/* ===== Reset & Base Styles ===== */
 * {
   margin: 0;
   padding: 0;
@@ -7,143 +7,178 @@
 
 html {
   font-size: 16px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f6f9fc;
-  color: #333;
+  scroll-behavior: smooth;
 }
 
 body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f8f9fc, #eef2f7);
+  color: #333;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   padding: 2rem;
 }
 
-/* Container */
+/* ===== Container ===== */
 .container {
-  background: #fff;
-  padding: 2rem 2.5rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Title */
-.container h1 {
+/* ===== Headings ===== */
+h1 {
   font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
   color: #2c3e50;
-}
-
-.container h1 small {
-  display: block;
-  font-size: 0.85rem;
-  margin-top: 0.3rem;
-  color: #888;
-}
-
-/* Fieldsets */
-fieldset {
   margin-bottom: 1.5rem;
-  border: none;
+  text-align: center;
 }
 
-legend {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+h1 small {
   display: block;
-  color: #444;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.3rem;
 }
 
-/* Inputs & Selects */
+/* ===== Form Fields ===== */
+form fieldset {
+  border: none;
+  margin-bottom: 1.5rem;
+}
+
+form legend {
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
 select,
 textarea {
   width: 100%;
-  padding: 0.8rem;
-  border: 1.5px solid #ddd;
-  border-radius: 0.75rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
   font-size: 1rem;
-  transition: all 0.2s ease-in-out;
-  background: #fff;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
 select:focus,
 textarea:focus {
   border-color: #3498db;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-/* Floating label text area */
+/* ===== Floating Label (Textarea) ===== */
 .floating-label {
   position: relative;
 }
 
 .floating-label textarea {
-  resize: vertical;
-  min-height: 100px;
-  padding-top: 1.2rem;
+  resize: none;
 }
 
 .floating-label label {
   position: absolute;
-  top: 0.8rem;
-  left: 0.9rem;
+  top: 0.9rem;
+  left: 1rem;
+  font-size: 0.95rem;
   color: #888;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
   pointer-events: none;
+  transition: 0.3s ease;
 }
 
 .floating-label textarea:focus + label,
 .floating-label textarea:not(:placeholder-shown) + label {
   top: -0.6rem;
-  left: 0.7rem;
+  left: 0.8rem;
   background: #fff;
-  padding: 0 0.3rem;
   font-size: 0.75rem;
   color: #3498db;
+  padding: 0 0.3rem;
+  border-radius: 0.3rem;
 }
 
-/* Hint text */
+/* ===== Hint Text ===== */
 .hint-text {
+  display: block;
   font-size: 0.8rem;
   color: #777;
-  margin-top: 0.3rem;
-  display: block;
+  margin-top: 0.2rem;
 }
 
-/* Submit button */
+/* ===== Button ===== */
 button {
   width: 100%;
-  padding: 0.9rem;
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(135deg, #3498db, #2ecc71);
+  border: none;
+  border-radius: 0.6rem;
+  color: #fff;
   font-size: 1.1rem;
   font-weight: bold;
-  background: #3498db;
-  border: none;
-  border-radius: 0.9rem;
-  color: #fff;
   cursor: pointer;
-  transition: background 0.25s ease;
+  transition: background 0.4s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background: #2980b9;
+  background: linear-gradient(135deg, #2980b9, #27ae60);
+  transform: translateY(-2px);
 }
 
 button:disabled {
-  background: #aaa;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* Contact Info */
-.contact-info {
-  margin-top: 1.8rem;
-  font-size: 0.9rem;
+/* ===== Modal ===== */
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 1.2rem 1.5rem;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  animation: pulse 1.2s infinite;
+}
+
+/* ===== Error Message ===== */
+.error-message {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #ffe6e6;
+  color: #d63031;
+  border: 1px solid #ff7675;
+  border-radius: 0.5rem;
+  font-weight: 500;
   text-align: center;
+}
+
+/* ===== Contact Info ===== */
+.contact-info {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
   color: #555;
 }
 
@@ -156,66 +191,35 @@ button:disabled {
   text-decoration: underline;
 }
 
-/* Modal */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 1000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 1.5rem 2rem;
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  text-align: center;
-  color: #2c3e50;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
+/* ===== Animations ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Error Message */
-.error-message {
-  background: #ffe6e6;
-  color: #c0392b;
-  border: 1px solid #e74c3c;
-  padding: 0.9rem;
-  border-radius: 0.8rem;
-  font-size: 0.95rem;
-  margin-top: 1rem;
-  text-align: center;
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-/* Screen Reader Only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* Responsive */
+/* ===== Responsive ===== */
 @media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
   .container {
     padding: 1.5rem;
   }
 
-  .container h1 {
+  h1 {
     font-size: 1.5rem;
   }
 }
