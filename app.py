@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, Response
 import os
 from openai import OpenAI
 from fpdf import FPDF
@@ -20,20 +20,16 @@ def generate_paper(subject, chapter, difficulty):
 def create_exam_pdf(text, subject, chapter):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Courier", size=12)  # Monospaced font to avoid encoding issues
+    pdf.set_font("Courier", size=12)
 
-    # Header
     header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 10, header, ln=1, align="C")
     pdf.ln(5)
 
-    # Add text lines using multi_cell for wrapping
     for line in text.split('\n'):
         pdf.multi_cell(0, 8, line)
 
-    # Output PDF as bytes with latin-1 encoding, replacing unsupported characters
-    pdf_output = pdf.output(dest='S').encode('latin-1', 'replace')
-    return pdf_output
+    return pdf.output(dest='S').encode('latin-1', 'replace')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -47,14 +43,13 @@ def index():
 
         pdf_stream = io.BytesIO(pdf_content)
         pdf_stream.seek(0)
+        data = pdf_stream.read()
 
-        return send_file(
-            pdf_stream,
-            as_attachment=True,
-            download_name=f"{subject}_{chapter}_model_paper.pdf",
-            mimetype='application/pdf',
-            conditional=True,
-        )
+        response = Response(data, mimetype='application/pdf')
+        response.headers.set('Content-Disposition', 'attachment', filename=f"{subject}_{chapter}_model_paper.pdf")
+        response.headers['Content-Length'] = len(data)
+        return response
+
     return render_template('form.html')
 
 if __name__ == '__main__':
