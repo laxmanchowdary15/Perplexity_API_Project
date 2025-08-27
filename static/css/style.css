@@ -1,216 +1,217 @@
-/* ===== Reset & base styles ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
 
 html, body {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #d0eaff 0%, #a0c8ff 100%);
-  color: #004080;
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* Prevent scrolling */
 }
 
-/* ===== Container and centering ===== */
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top left, #d0eaff, #a0c8ff);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 2rem 1rem; /* padding left/right small on laptop */
-  min-height: 100vh;
+  align-items: center;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%),
+    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%);
+  background-position: 0 0, 8px 8px;
+  background-size: 16px 16px;
 }
 
 .container {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 15px 40px rgba(0, 95, 163, 0.15);
-  padding: 2.5rem 2rem;
+  background: white;
+  padding: 3rem 4rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 119, 204, 0.3);
   width: 100%;
-  max-width: 480px;
-  border: 3px dashed #0077cc;
-  user-select: none;
-  /* Add a subtle fade-in */
-  animation: fadeIn 0.8s ease forwards;
+  max-width: 650px;
+  border: 4px dashed #0077cc;
+  animation: fadeIn 1s ease forwards;
+  box-sizing: border-box;
 }
 
-/* ===== Heading ===== */
 h1 {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  font-weight: 700;
-  font-size: 2.3rem;
+  font-family: 'Comic Neue', cursive;
   text-align: center;
-  margin-bottom: 2rem;
   color: #005fa3;
+  margin-bottom: 2rem;
+  letter-spacing: 2px;
+  font-size: 2.8rem;
   text-shadow: 1px 1px 3px #a0c8ff;
   user-select: none;
 }
 
-/* ===== Form Elements ===== */
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 label {
-  font-weight: 600;
+  display: block;
+  margin: 1rem 0 0.6rem 0;
+  font-weight: 700;
+  color: #004080;
   font-size: 1.1rem;
   cursor: pointer;
-  color: #004080;
 }
 
-/* Inputs, Selects, Textarea */
-select, textarea {
+select, input[type="text"], textarea {
   width: 100%;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #004080;
+  max-width: 100%;
   padding: 0.65rem 1rem;
+  border: 3px solid #0077cc;
   border-radius: 12px;
-  border: 2.5px solid #0077cc;
-  background: #e6f0ff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1.1rem;
+  transition: border-color 0.3s ease, box-shadow 0.4s ease;
   outline: none;
+  box-sizing: border-box;
+  background: #e6f0ff;
+  color: #004080;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   resize: vertical;
-  font-family: inherit;
-  min-height: 2.7rem;
 }
 
-textarea {
-  min-height: 5rem;
-}
-
-select:hover,
-textarea:hover,
-select:focus,
-textarea:focus {
+select:hover, input[type="text"]:hover, textarea:hover {
   border-color: #005fa3;
-  box-shadow: 0 0 10px #005fa3aa;
+  box-shadow: 0 0 15px #005fa3aa;
 }
 
-/* Button */
-button {
-  margin-top: 1.8rem;
-  padding: 0.9rem 1rem;
+select:focus, input[type="text"]:focus, textarea:focus {
+  border-color: #005fa3;
+  box-shadow: 0 0 20px #005fa3dd;
+}
+
+button#generateBtn {
+  margin: 2rem auto 0;
+  padding: 0.7rem;
+  max-width: 280px;
+  width: 100%;
   border: none;
-  border-radius: 16px;
   background: linear-gradient(45deg, #005fa3, #0077cc);
   color: white;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 900;
+  border-radius: 14px;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(0, 95, 163, 0.6);
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 8px 15px rgba(0, 95, 163, 0.5);
+  display: block;
   user-select: none;
 }
 
-button:hover {
+button#generateBtn:hover {
   background: linear-gradient(45deg, #0077cc, #005fa3);
-  transform: scale(1.05);
-  box-shadow: 0 14px 30px rgba(0, 95, 163, 0.8);
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 10px 22px rgba(0, 95, 163, 0.7);
 }
 
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  transform: none;
-  box-shadow: none;
+button#generateBtn:active {
+  transform: scale(0.95) rotate(0deg);
 }
 
-/* Floating label style */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 85, 170, 0.4); /* semi-transparent blue overlay */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  color: #005fa3;
+  box-shadow: 0 0 20px rgba(0, 119, 204, 0.5);
+  font-weight: bold;
+  text-align: center;
+}
+
+.error-message {
+  display: none;
+  color: red;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+@media (max-width: 700px) {
+  .container {
+    width: 95%;
+    max-width: none;
+    padding: 1.8rem 2rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  label {
+    font-size: 1rem;
+  }
+  select, input[type="text"], textarea {
+    font-size: 1rem;
+  }
+  button#generateBtn {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+    max-width: 100%;
+  }
+}
+
+/* Floating label styles */
 .floating-label {
   position: relative;
+  margin-top: 20px;
 }
 
 .floating-label textarea {
-  padding-top: 1.4rem;
+  min-height: 80px;
+  max-height: 140px;
+  background: #f9f9f9;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  transition: border-color 0.3s ease;
 }
 
 .floating-label label {
   position: absolute;
-  top: 0.4rem;
-  left: 1rem;
-  font-size: 0.9rem;
-  color: #005fa3cc;
+  left: 12px;
+  top: 12px;
+  background: white;
+  padding: 0 6px;
+  color: #999;
+  font-size: 1rem;
   pointer-events: none;
-  user-select: none;
-  transition: all 0.25s ease;
+  transition: 0.3s ease all;
+  border-radius: 4px;
 }
 
-/* Modal style */
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0, 95, 163, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.4rem;
-  color: white;
-  font-weight: 700;
-  z-index: 9999;
-  user-select: none;
-  text-shadow: 0 0 4px black;
+.floating-label textarea:focus {
+  outline: none;
+  border-color: #7873f5;
+  background: #fff;
 }
 
-/* Error message */
-.error-message {
-  margin-top: 1rem;
-  padding: 0.8rem 1rem;
-  border-radius: 12px;
-  background-color: #ffdddd;
-  color: #d8000c;
-  font-weight: 700;
-  text-align: center;
-  display: none;
-  user-select: none;
-}
-
-/* Contact info */
-.contact-info {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
-  text-align: center;
-  color: #005fa3cc;
-  user-select: none;
-}
-
-.contact-info a {
-  color: #005fa3;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.contact-info a:hover {
-  text-decoration: underline;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
-}
-
-/* Responsive tweaks */
-@media (max-width: 500px) {
-  .container {
-    padding: 2rem 1.5rem;
-    max-width: 100%;
-    border-width: 2px;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-
-  button {
-    font-size: 1.1rem;
-  }
+.floating-label textarea:focus + label,
+.floating-label textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+  color: #7873f5;
 }

@@ -114,6 +114,7 @@
 #     app.run(host='0.0.0.0', debug=True)
 
 from flask import Flask, render_template, request, Response
+from flask import make_response
 import os
 from openai import OpenAI
 from fpdf import FPDF, XPos, YPos
