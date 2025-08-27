@@ -112,6 +112,7 @@
 
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', debug=True)
+
 from flask import Flask, render_template, request, Response
 import os
 from openai import OpenAI
@@ -119,74 +120,85 @@ from fpdf import FPDF, XPos, YPos
 import re
 
 app = Flask(__name__)
-client = OpenAI(api_key=os.environ.get("PERPLEXITY_API_KEY"), base_url="https://api.perplexity.ai")
 
+client = OpenAI(
+    api_key=os.environ.get("PERPLEXITY_API_KEY"),
+    base_url="https://api.perplexity.ai"
+)
+
+# -------------------- Generate Paper --------------------
 def generate_paper(subject, chapter, difficulty):
     prompt = (
         f"Create a model paper for class 10 {subject}, "
         f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-        "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print. Make questions strictly based difficulty level but add one difficult questions in all levels.Follow the qustions format and syllabus of andhra pradesh board for all classes and formats."
+        "C (2x4), D (1x4), with suitable questions. Some extra requirement are ",f"{suggestions}" "Use plain text and clean mathematical symbols. "
+        "Avoid LaTeX, avoid \\( \\), avoid $$. Use superscripts (x²), fractions (a/b), etc. Make questions strictly based difficulty level but add one difficult question in all levels.Follow the qustions format and syllabus of andhra pradesh board for all classes and formats.Give response as exam question paper no hint or extra descriptions in response of any kind, since response is being printed as pdf."
     )
     response = client.chat.completions.create(
         model="sonar-pro",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
-def sanitize_text(text):
-    replacements = {
-        '–': '-',  # en dash to hyphen
-        '—': '-',  # em dash to hyphen
-        '“': '"',
-        '”': '"',
-        '‘': "'",
-        '’': "'",
-        # Add other replacements if needed
-    }
-    for orig, repl in replacements.items():
-        text = text.replace(orig, repl)
-    return text
+# def sanitize_text(text):
+#     replacements = {
+#         '–': '-',  # en dash to hyphen
+#         '—': '-',  # em dash to hyphen
+#         '“': '"',
+#         '”': '"',
+#         '‘': "'",
+#         '’': "'",
+#         # Add other replacements if needed
+#     }
+#     for orig, repl in replacements.items():
+#         text = text.replace(orig, repl)
+#     return text
 
 
-def create_exam_pdf(raw_text, subject, chapter):
-    # text = clean_math_latex(raw_text)
-    text = sanitize_text(raw_text)
-
-    header = f"Class 10 Model Paper - {subject} - {chapter}"
-    header = sanitize_text(header)  # sanitize header text too
-
+def create_exam_pdf(text, subject, chapter):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
 
+    # Load Unicode font
+    font_path = os.path.join(os.path.dirname(__file__), 'static', 'fonts', 'DejaVuSans.ttf')
+    pdf.add_font("DejaVu", "", font_path, uni=True)
+    pdf.add_font("DejaVu", "B", font_path, uni=True)
+    pdf.add_font("DejaVu", "I", font_path, uni=True)
+
     page_width = pdf.w - 2 * pdf.l_margin
 
-    pdf.set_font("Helvetica", 'B', 16)
+    # Header
+    pdf.set_font("DejaVu", "B", 16)
+    header = f"Class 10 Model Paper – {subject} – {chapter}"
     pdf.cell(0, 12, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.ln(10)
 
+    # Body
     lines = text.split('\n')
     for line in lines:
         line = line.strip()
         if not line:
-            pdf.ln(5)
+            pdf.ln(4)
             continue
 
         if line.startswith("**Section"):
-            section_title = line.replace("**", "").strip()
-            pdf.set_font("Helvetica", 'B', 14)
+            section_title = line.replace("**", "")
+            pdf.set_font("DejaVu", "B", 14)
             pdf.cell(0, 10, section_title, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             pdf.ln(3)
         else:
-            pdf.set_font("Helvetica", '', 12)
+            pdf.set_font("DejaVu", "", 12)
             pdf.multi_cell(page_width, 6, line)
-            pdf.ln(2)
+            pdf.ln(1)
 
-    pdf.ln(10)
-    pdf.set_font("Helvetica", 'I', 12)
+    # Footer
+    pdf.ln(5)
+    pdf.set_font("DejaVu", "I", 12)
     pdf.cell(0, 10, "*End of Paper*", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
-    pdf_bytes = bytes(pdf.output())
-    return pdf_bytes
+    return pdf.output(dest="S").encode("latin1")  # PDF as bytes
+
+# -------------------- Routes --------------------
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -204,6 +216,8 @@ def index():
         return response
 
     return render_template('form.html')
+
+# -------------------- Run --------------------
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
