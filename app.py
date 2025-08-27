@@ -9,8 +9,10 @@ client = OpenAI(api_key=os.environ.get("PERPLEXITY_API_KEY"), base_url="https://
 
 def generate_paper(subject, chapter, difficulty):
     prompt = (f"Create a model paper for class 10 {subject}, "
-              f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-              "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print.")
+              f"chapter '{chapter}', difficulty: {difficulty}. "
+              "Structure it as Section A (10x1 marks), Section B (4x2 marks), "
+              "Section C (2x4 marks), Section D (1x4 marks) with suitable questions. "
+              "Output in plain text, easy to print.")
     response = client.chat.completions.create(
         model="sonar-pro",
         messages=[{"role": "user", "content": prompt}]

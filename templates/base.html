@@ -3,91 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Model Paper Generator</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <script defer src="{{ url_for('static', filename='js/chapters.js') }}"></script>
-
-  <style>
-    /* Disable page scroll */
-    body, html {
-      overflow: hidden;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
+  <title>Class 10 Model Paper Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
   <div class="container">
     {% block content %}{% endblock %}
   </div>
 
-  <!-- Loading overlay -->
-  <div id="loading-overlay" class="hidden">
-    <div class="loader"></div>
-    <div class="loading-text">Generating your exam paper, please wait...</div>
-  </div>
-
-  <!-- Download popup -->
-  <div id="download-popup"></div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.querySelector('form');
-      const overlay = document.getElementById('loading-overlay');
-      const popup = document.getElementById('download-popup');
-
-      form.addEventListener('submit', () => {
-        overlay.classList.remove('hidden');
-      });
-
-      // Listen for download link clicks and show popup with filename
-      // Since form POST triggers file download, we use Fetch to intercept and show popup
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        overlay.classList.remove('hidden');
-
-        const formData = new FormData(form);
-        try {
-          const response = await fetch(form.action, {
-            method: form.method,
-            body: formData,
-          });
-          if (!response.ok) throw new Error("Network error");
-
-          // Get filename from content-disposition header
-          const disposition = response.headers.get('content-disposition');
-          let filename = 'your file';
-          if (disposition && disposition.indexOf('filename=') !== -1) {
-            filename = disposition.split('filename=')[1].split(';')[0].replace(/"/g, '');
-          }
-
-          const blob = await response.blob();
-          overlay.classList.add('hidden');
-
-          // Trigger file download
-          const link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-
-          // Show popup with filename
-          popup.textContent = `Download Complete: ${filename} — All the best!`;
-          popup.classList.add('show');
-
-          setTimeout(() => {
-            popup.classList.remove('show');
-          }, 3000);
-
-        } catch (err) {
-          overlay.classList.add('hidden');
-          alert('Failed to download file. Please try again.');
-          console.error(err);
-        }
-      });
-    });
-  </script>
+  <script src="{{ url_for('static', filename='chapters.js') }}"></script>
 </body>
 </html>

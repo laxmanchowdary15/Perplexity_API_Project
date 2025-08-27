@@ -16,129 +16,92 @@ const chaptersBySubject = {
     "Statistics",
     "Probability"
   ],
+
   "Science": [
-    "Heat",
-    "Acids, Bases and Salts",
-    "Refraction of Light at Plane Surfaces",
-    "Refraction of Light at Curved Surfaces",
-    "Human Eye and Colourful World",
-    "Structure of Atom",
-    "Classification of Elements - The Periodic Table",
-    "Electric Current",
-    "Electromagnetism",
-    "Principles of Metallurgy",
-    "Carbon and its Compounds",
-    "Nutrition – Food Supplying System",
-    "Respiration – The Energy Producing System",
-    "Transportation – The Circulatory System",
-    "Excretion – The Waste Disposal System",
-    "Coordination – The Linking System",
-    "Reproduction – The Generating System",
-    "Coordination in Life Processes",
-    "Our Environment – Our Concern",
-    "Natural Resources"
+    "Chemical Reactions and Equations",
+    "Acids, Bases, and Salts",
+    "Metals and Non-Metals",
+    "Carbon and Its Compounds",
+    "Periodic Classification of Elements",
+    "Life Processes",
+    "Control and Coordination",
+    "How do Organisms Reproduce?",
+    "Heredity and Evolution",
+    "Light – Reflection and Refraction",
+    "The Human Eye and the Colourful World",
+    "Electricity",
+    "Magnetic Effects of Electric Current",
+    "Sources of Energy"
   ],
+
   "Social": [
-    "India: Relief Features",
-    "Ideas of Development",
-    "Production and Employment",
-    "Climate of India",
-    "Indian Rivers and Water Resources",
-    "The People",
-    "People and Settlement",
-    "People and Migration",
-    "Rampur: A Village Economy",
-    "Globalisation",
-    "Food Security",
-    "Sustainable Development with Equity",
-    "The World Between Wars 1900-1950: Part I",
-    "The World Between Wars 1900-1950: Part II",
-    "National Liberation Movements in the Colonies",
-    "National Movement in India – Partition & Independence",
-    "The Making of Independent India’s Constitution",
-    "Independent India (The First 30 years – 1947-77)",
-    "Emerging Political Trends 1977 to 2000",
-    "Post-War World and India",
-    "Social Movements in Our Times",
-    "Citizens and the Governments"
+    "Nationalism in India",
+    "The Making of a Global World",
+    "The Age of Industrialization",
+    "Print Culture and the Modern World",
+    "Resources and Development",
+    "Forest and Wildlife Resources",
+    "Water Resources",
+    "Agriculture",
+    "Minerals and Energy Resources",
+    "Manufacturing Industries",
+    "Lifelines of National Economy",
+    "Power Sharing",
+    "Federalism",
+    "Democracy and Diversity",
+    "Gender, Religion and Caste",
+    "Popular Struggles and Movements",
+    "Political Parties",
+    "Outcomes of Democracy",
+    "Challenges to Democracy"
   ],
+
   "English": [
     "A Letter to God",
     "Nelson Mandela: Long Walk to Freedom",
-    "Two Stories about Flying and Black Aeroplane",
+    "Two Stories about Flying",
     "From the Diary of Anne Frank",
-    "Glimpses of India (A Baker from Goa, Coorg, Tea from Assam)",
+    "Glimpses of India",
     "Mijbil the Otter",
     "Madam Rides the Bus",
-    "The Sermon at Benares",
-    "The Proposal",
-    "Dust of Snow",
-    "Fire and Ice",
-    "A Tiger in the Zoo",
-    "How to Tell Wild Animals",
-    "The Ball Poem",
+    "The Hundred Dresses",
+    "The Hundred Dresses – II",
+    "A Baker from Goa",
     "Amanda",
+    "Animals",
     "The Trees",
     "Fog",
     "The Tale of Custard the Dragon",
-    "For Anne Gregory"
+    "The Ball Poem",
+    "The Invisible Man",
+    "The Treasure within",
+    "Footprints without Feet",
+    "The Magic Drum and Other Favourite Stories",
+    "The Necklace",
+    "The Hack Driver",
+    "Bholi",
+    "The Book that Saved the Earth"
   ]
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   const subjectSelect = document.getElementById('subject');
   const chapterSelect = document.getElementById('chapter');
-  const form = document.querySelector('form');
 
   subjectSelect.addEventListener('change', () => {
-    const selectedSubject = subjectSelect.value;
-    const chapters = chaptersBySubject[selectedSubject] || [];
-
-    chapterSelect.innerHTML = '<option value="" disabled selected>Select Chapter</option>';
-    chapters.forEach(chapter => {
-      const option = document.createElement('option');
-      option.value = chapter;
-      option.textContent = chapter;
-      chapterSelect.appendChild(option);
-    });
-  });
-
-  // Create download popup div
-  const popup = document.createElement('div');
-  popup.id = 'download-popup';
-  popup.style.position = 'fixed';
-  popup.style.bottom = '20px';
-  popup.style.left = '50%';
-  popup.style.transform = 'translateX(-50%)';
-  popup.style.background = 'rgba(0,0,0,0.75)';
-  popup.style.color = 'white';
-  popup.style.padding = '15px 25px';
-  popup.style.borderRadius = '8px';
-  popup.style.fontSize = '1.2rem';
-  popup.style.zIndex = '9999';
-  popup.style.opacity = '0';
-  popup.style.pointerEvents = 'none';
-  popup.style.transition = 'opacity 0.5s ease';
-  document.body.appendChild(popup);
-
-  // Show popup with filename after form submit
-  form.addEventListener('submit', (event) => {
-    // Get selected subject and chapter for filename
     const subject = subjectSelect.value;
-    const chapter = chapterSelect.value;
-    const fileName = `${subject}_${chapter}_model_paper.pdf`;
+    chapterSelect.innerHTML = '<option value="" disabled selected>Choose a chapter...</option>';
 
-    // Delay showing popup so it doesn’t flash too early
-    setTimeout(() => {
-      popup.textContent = `Download started: ${fileName}`;
-      popup.classList.add('show');
-      popup.style.opacity = '1';
-      popup.style.pointerEvents = 'auto';
-
-      setTimeout(() => {
-        popup.style.opacity = '0';
-        popup.style.pointerEvents = 'none';
-      }, 3500);
-    }, 1000); // 1 second delay
+    if (chaptersBySubject[subject]) {
+      chaptersBySubject[subject].forEach(chap => {
+        const option = document.createElement('option');
+        option.value = chap;
+        option.textContent = chap;
+        chapterSelect.appendChild(option);
+      });
+      chapterSelect.disabled = false;
+    } else {
+      chapterSelect.disabled = true;
+    }
   });
 });
