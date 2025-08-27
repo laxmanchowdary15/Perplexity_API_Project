@@ -49,11 +49,11 @@
   });
 </script>
 {% endblock %} -->
-
 {% extends "base.html" %}
 
 {% block content %}
 <h1>🎉 Class 10 Model Paper Generator 🎉</h1>
+
 <form id="paperForm">
   <label for="subject">📚 Choose Your Subject</label>
   <select name="subject" id="subject" required>
@@ -80,14 +80,14 @@
 </form>
 
 <!-- Modal -->
-<div id="loadingModal" class="modal" style="display:none;">
+<div id="loadingModal" class="modal">
   <div class="modal-content">
-    <p>⏳ Generating your PDF, please wait...</p>
+    ⏳ Generating your PDF, please wait...
   </div>
 </div>
 
 <!-- Error Message -->
-<div id="errorMessage" style="display:none; color: red; margin-top: 1rem; text-align: center;">
+<div id="errorMessage" class="error-message">
   ❌ Something went wrong. Please try again.
 </div>
 
@@ -144,11 +144,11 @@
 
     const form = e.target;
     const button = document.getElementById('generateBtn');
-    const loadingModal = document.getElementById('loadingModal');
+    const modal = document.getElementById('loadingModal');
     const errorBox = document.getElementById('errorMessage');
 
     button.disabled = true;
-    loadingModal.style.display = 'flex';
+    modal.style.display = 'flex';
     errorBox.style.display = 'none';
 
     const formData = new FormData(form);
@@ -159,26 +159,27 @@
         body: formData
       });
 
-      if (!response.ok || response.headers.get('Content-Type') !== 'application/pdf') {
-        throw new Error("Download failed");
+      if (!response.ok || !response.headers.get('Content-Type').includes('application/pdf')) {
+        throw new Error("Invalid response");
       }
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
+      const filename = response.headers.get('Content-Disposition')?.split('filename=')[1] || 'model_paper.pdf';
       a.href = url;
-      const filename = response.headers.get('Content-Disposition').split('filename=')[1];
-      a.download = filename.replace(/"/g, '');
+      a.download = filename.replace(/["']/g, '');
       document.body.appendChild(a);
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-    } catch (err) {
+    } catch (error) {
       errorBox.style.display = 'block';
     } finally {
-      loadingModal.style.display = 'none';
+      modal.style.display = 'none';
       button.disabled = false;
     }
   });
 </script>
 {% endblock %}
+

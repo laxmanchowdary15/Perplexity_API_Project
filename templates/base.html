@@ -4,16 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Model Paper Generator</title>
-  
-  <!-- Link CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-  <div class="container">
-    {% block content %}{% endblock %}
+  <div class="zoom-wrapper">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
   </div>
 
-  <!-- Load JS files at bottom for faster page load -->
+  <!-- JS to populate chapters -->
   <script src="{{ url_for('static', filename='js/chapters.js') }}"></script>
+
+  <!-- Scale-to-fit script -->
+  <script>
+    function scaleToFit() {
+      const wrapper = document.querySelector('.zoom-wrapper');
+      const scaleX = window.innerWidth / wrapper.scrollWidth;
+      const scaleY = window.innerHeight / wrapper.scrollHeight;
+      const scale = Math.min(scaleX, scaleY, 1);
+      wrapper.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener('resize', scaleToFit);
+    window.addEventListener('load', scaleToFit);
+  </script>
 </body>
 </html>
