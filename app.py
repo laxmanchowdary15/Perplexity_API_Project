@@ -10,42 +10,31 @@ client = OpenAI(api_key=os.environ.get("PERPLEXITY_API_KEY"), base_url="https://
 def generate_paper(subject, chapter, difficulty):
     prompt = (f"Create a model paper for class 10 {subject}, "
               f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-              "C (2x4), D (1x4), with suitable questions. Output in print-friendly text.")
+              "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print.")
     response = client.chat.completions.create(
         model="sonar-pro",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
 
-class PDF(FPDF):
-    def header(self):
-        pass  # no default header
-    
-    def footer(self):
-        self.set_y(-15)
-        self.set_font('DejaVu', '', 10)
-        self.set_text_color(128)
-        self.cell(0, 10, f'Page {self.page_no()}', align='C')
-
 def create_exam_pdf(text, subject, chapter):
-    pdf = PDF()
+    pdf = FPDF()
     pdf.add_page()
-    
-    # Add DejaVu font for Unicode support
-    pdf.add_font('DejaVu', '', 'DejaVuSans.ttf', uni=True)
-    pdf.set_font("DejaVu", 'B', 16)
+    pdf.set_font("Courier", size=12)  # Using Courier for monospaced and safe encoding
 
+    # Header
     header = f"Class 10 Model Paper - {subject} - {chapter}"
-    pdf.cell(0, 10, header, ln=True, align="C")
-    pdf.ln(8)
+    pdf.cell(0, 10, header, ln=1, align="C")
+    pdf.ln(5)
 
-    pdf.set_font("DejaVu", '', 12)
-    pdf.set_auto_page_break(auto=True, margin=15)
-
-    for line in text.split('\n'):
+    # Add text line by line
+    lines = text.split('\n')
+    for line in lines:
+        # Write multi-cell to handle long lines properly
         pdf.multi_cell(0, 8, line)
 
-    pdf_output = pdf.output(dest='S').encode('latin-1', errors='ignore')
+    # Output PDF as bytes
+    pdf_output = pdf.output(dest='S').encode('latin-1', 'replace')
     return pdf_output
 
 @app.route('/', methods=['GET', 'POST'])
@@ -57,6 +46,7 @@ def index():
 
         paper_text = generate_paper(subject, chapter, difficulty)
         pdf_content = create_exam_pdf(paper_text, subject, chapter)
+
         pdf_stream = io.BytesIO(pdf_content)
         pdf_stream.seek(0)
 
@@ -65,9 +55,9 @@ def index():
             as_attachment=True,
             download_name=f"{subject}_{chapter}_model_paper.pdf",
             mimetype='application/pdf',
-            conditional=True
+            conditional=True,
         )
     return render_template('form.html')
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
