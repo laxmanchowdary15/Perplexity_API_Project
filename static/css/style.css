@@ -15,26 +15,22 @@ html, body {
   background-size: 16px 16px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  overflow-y: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  align-items: flex-start;
+  padding: 2rem 0;
   color: #004080;
+  overflow-x: hidden;
 }
 
 /* Container */
 .container {
   background: #fff;
-  padding: 2.5rem 3.5rem;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 119, 204, 0.3);
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 119, 204, 0.25);
   max-width: 700px;
-  width: 100%;
-  border: 4px dashed #0077cc;
+  width: 95%;
+  border: 2px solid #0077cc;
   animation: fadeIn 1s ease forwards;
-  overflow-y: auto;
-  max-height: 90vh;
-  margin: 2rem auto;
   box-sizing: border-box;
 }
 
@@ -42,8 +38,7 @@ html, body {
 h1 {
   font-family: 'Comic Neue', cursive;
   font-weight: 700;
-  font-size: 2.8rem;
-  letter-spacing: 2px;
+  font-size: 2.5rem;
   text-align: center;
   color: #005fa3;
   margin-bottom: 2rem;
@@ -56,7 +51,7 @@ label {
   display: block;
   margin: 1rem 0 0.6rem 0;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   cursor: pointer;
 }
 
@@ -64,31 +59,28 @@ label {
 select, textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 3px solid #0077cc;
+  border: 2px solid #0077cc;
   border-radius: 12px;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   background: #e6f0ff;
   color: #004080;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   box-sizing: border-box;
-  resize: vertical;
-  min-height: 3rem;
   transition: border-color 0.3s ease, box-shadow 0.4s ease, background-color 0.3s ease;
-  outline-offset: 2px;
 }
 
 select:hover, textarea:hover {
   border-color: #005fa3;
-  box-shadow: 0 0 15px #005fa3aa;
+  box-shadow: 0 0 12px #005fa3aa;
   background-color: #f0f8ff;
 }
 
 select:focus, textarea:focus {
   border-color: #005fa3;
-  box-shadow: 0 0 20px #005fa3dd;
+  box-shadow: 0 0 16px #005fa3dd;
   background-color: #fff;
-  outline: 3px solid #004080; /* clear focus ring for accessibility */
+  outline: 2px solid #004080;
   outline-offset: 2px;
 }
 
@@ -98,63 +90,55 @@ button {
   width: 100%;
   padding: 1rem;
   border: none;
-  border-radius: 16px;
-  font-size: 1.3rem;
-  font-weight: 900;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
   cursor: pointer;
   color: white;
   background: linear-gradient(45deg, #005fa3, #0077cc);
   box-shadow: 0 10px 20px rgba(0, 95, 163, 0.6);
-  user-select: none;
   transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover,
 button:focus-visible {
   background: linear-gradient(45deg, #0077cc, #005fa3);
-  transform: scale(1.1) rotate(-3deg);
-  box-shadow: 0 14px 30px rgba(0, 95, 163, 0.8);
+  transform: scale(1.05);
+  box-shadow: 0 14px 28px rgba(0, 95, 163, 0.8);
   outline: none;
 }
 
 button:active {
-  transform: scale(0.95) rotate(0deg);
+  transform: scale(0.97);
 }
 
 /* Floating label */
 .floating-label {
   position: relative;
-  margin-top: 1.25rem;
+  margin-top: 1.5rem;
 }
 
 .floating-label textarea {
-  padding: 12px;
+  width: 100%;
+  padding: 1rem;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid #0077cc;
   border-radius: 8px;
   background: #f9f9f9;
   font-family: inherit;
-  transition: border-color 0.3s ease;
   box-sizing: border-box;
 }
 
 .floating-label label {
   position: absolute;
-  left: 12px;
-  top: 12px;
+  left: 14px;
+  top: 14px;
   background: white;
   padding: 0 6px;
-  color: #999;
+  color: #666;
   font-size: 1rem;
   pointer-events: none;
-  transition: 0.3s ease all;
-  border-radius: 4px;
-}
-
-.floating-label textarea:focus {
-  outline: none;
-  border-color: #7873f5;
-  background: #fff;
+  transition: 0.2s ease all;
 }
 
 .floating-label textarea:focus + label,
@@ -162,7 +146,7 @@ button:active {
   top: -10px;
   left: 10px;
   font-size: 0.8rem;
-  color: #7873f5;
+  color: #005fa3;
 }
 
 /* Contact info */
@@ -182,7 +166,6 @@ button:active {
 .contact-info a:hover,
 .contact-info a:focus {
   text-decoration: underline;
-  outline: none;
 }
 
 /* Modal */
@@ -200,21 +183,20 @@ button:active {
 
 .modal-content {
   background-color: white;
-  padding: 2rem 2.5rem;
+  padding: 2rem;
   border-radius: 12px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #005fa3;
-  box-shadow: 0 0 20px rgba(0, 119, 204, 0.5);
   font-weight: bold;
   text-align: center;
+  box-shadow: 0 0 20px rgba(0, 119, 204, 0.5);
   max-width: 90vw;
-  box-sizing: border-box;
 }
 
 /* Error message */
 .error-message {
   display: none;
-  color: #b00020; /* better contrast red */
+  color: #b00020;
   font-size: 1.1rem;
   text-align: center;
   margin-top: 1rem;
@@ -222,31 +204,19 @@ button:active {
 
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .container {
-    padding: 1.5rem 1.5rem;
+    padding: 1.5rem;
     width: 95%;
-    max-width: none;
-    border-radius: 16px;
   }
 
   h1 {
     font-size: 2rem;
-  }
-
-  label {
-    font-size: 1rem;
   }
 
   select, textarea {
@@ -254,7 +224,7 @@ button:active {
   }
 
   button {
-    font-size: 1.1rem;
-    padding: 0.85rem;
+    font-size: 1rem;
+    padding: 0.9rem;
   }
 }

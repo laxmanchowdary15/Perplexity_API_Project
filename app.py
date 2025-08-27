@@ -176,7 +176,7 @@ def create_exam_pdf(text, subject, chapter):
 
     # Header
     pdf.set_font("DejaVu", "B", 16)
-    header = f"Class 10 Model Paper – {subject} – {chapter}"
+    header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 12, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.ln(10)
 
@@ -220,7 +220,7 @@ def index():
 
         response = make_response(pdf_content)
         response.headers.set('Content-Type', 'application/pdf')
-        response.headers.set('Content-Disposition', 'attachment', filename='exam.pdf')
+        response.headers.set('Content-Disposition', 'attachment', filename=filename=f"{subject}_{chapter}.pdf")
         return response
 
     return render_template('form.html')
