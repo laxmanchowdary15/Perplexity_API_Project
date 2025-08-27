@@ -121,17 +121,11 @@ import re
 app = Flask(__name__)
 client = OpenAI(api_key=os.environ.get("PERPLEXITY_API_KEY"), base_url="https://api.perplexity.ai")
 
-def clean_math_latex(text):
-    # Remove LaTeX delimiters for simplicity
-    text = re.sub(r"\\\((.*?)\\\)", r"\1", text)
-    text = re.sub(r"\$(.*?)\$", r"\1", text)
-    return text
-
 def generate_paper(subject, chapter, difficulty):
     prompt = (
         f"Create a model paper for class 10 {subject}, "
         f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-        "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print."
+        "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print. Make questions strictly based difficulty level but add one difficult questions in all levels.Follow the qustions format and syllabus of andhra pradesh board for all classes and formats."
     )
     response = client.chat.completions.create(
         model="sonar-pro",
@@ -140,20 +134,25 @@ def generate_paper(subject, chapter, difficulty):
     return response.choices[0].message.content
 def sanitize_text(text):
     replacements = {
-        '–': '-',
-        '—': '-',
+        '–': '-',  # en dash to hyphen
+        '—': '-',  # em dash to hyphen
         '“': '"',
         '”': '"',
         '‘': "'",
         '’': "'",
+        # Add other replacements if needed
     }
     for orig, repl in replacements.items():
         text = text.replace(orig, repl)
     return text
 
+
 def create_exam_pdf(raw_text, subject, chapter):
-    text = clean_math_latex(raw_text)
-    text = sanitize_text(text)  # sanitize special unicode characters
+    # text = clean_math_latex(raw_text)
+    text = sanitize_text(text)
+
+    header = f"Class 10 Model Paper - {subject} - {chapter}"
+    header = sanitize_text(header)  # sanitize header text too
 
     pdf = FPDF()
     pdf.add_page()
@@ -161,9 +160,7 @@ def create_exam_pdf(raw_text, subject, chapter):
 
     page_width = pdf.w - 2 * pdf.l_margin
 
-    # Title
     pdf.set_font("Helvetica", 'B', 16)
-    header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 12, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.ln(10)
 
