@@ -115,7 +115,7 @@
 from flask import Flask, render_template, request, Response
 import os
 from openai import OpenAI
-from fpdf import FPDF
+from fpdf import FPDF, XPos, YPos
 import re
 
 app = Flask(__name__)
@@ -149,9 +149,9 @@ def create_exam_pdf(raw_text, subject, chapter):
     page_width = pdf.w - 2 * pdf.l_margin
 
     # Title
-    pdf.set_font("Arial", 'B', 16)
+    pdf.set_font("Helvetica", 'B', 16)
     header = f"Class 10 Model Paper - {subject} - {chapter}"
-    pdf.cell(0, 12, header, ln=True, align="C")
+    pdf.cell(0, 12, header, new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
     pdf.ln(10)
 
     lines = text.split('\n')
@@ -163,20 +163,19 @@ def create_exam_pdf(raw_text, subject, chapter):
 
         if line.startswith("**Section"):
             section_title = line.replace("**", "").strip()
-            pdf.set_font("Arial", 'B', 14)
-            pdf.cell(0, 10, section_title, ln=True)
+            pdf.set_font("Helvetica", 'B', 14)
+            pdf.cell(0, 10, section_title, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
             pdf.ln(3)
         else:
-            pdf.set_font("Arial", '', 12)
+            pdf.set_font("Helvetica", '', 12)
             pdf.multi_cell(page_width, 6, line)
             pdf.ln(2)
 
     pdf.ln(10)
-    pdf.set_font("Arial", 'I', 12)
-    pdf.cell(0, 10, "*End of Paper*", ln=True, align="C")
+    pdf.set_font("Helvetica", 'I', 12)
+    pdf.cell(0, 10, "*End of Paper*", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
-    # Just return the bytearray directly, no encode
-    pdf_bytes = pdf.output(dest='S')
+    pdf_bytes = bytes(pdf.output())  # convert bytearray to bytes
     return pdf_bytes
 
 @app.route('/', methods=['GET', 'POST'])
