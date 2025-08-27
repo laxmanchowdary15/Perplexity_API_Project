@@ -1,230 +1,225 @@
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
-
-/* Reset and base */
-html, body {
+/* ===== Reset & Base Styles ===== */
+* {
   margin: 0;
   padding: 0;
-  height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: radial-gradient(circle at top left, #d0eaff, #a0c8ff);
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%),
-    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%);
-  background-position: 0 0, 8px 8px;
-  background-size: 16px 16px;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f8f9fc, #eef2f7);
+  color: #333;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 2rem 0;
-  color: #004080;
-  overflow-x: hidden;
+  padding: 2rem;
 }
 
-/* Container */
+/* ===== Container ===== */
 .container {
-  background: #fff;
-  padding: 2rem 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 15px 40px rgba(0, 119, 204, 0.25);
+  width: 100%;
   max-width: 700px;
-  width: 95%;
-  border: 2px solid #0077cc;
-  animation: fadeIn 1s ease forwards;
-  box-sizing: border-box;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Heading */
+/* ===== Headings ===== */
 h1 {
-  font-family: 'Comic Neue', cursive;
-  font-weight: 700;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
   text-align: center;
-  color: #005fa3;
-  margin-bottom: 2rem;
-  text-shadow: 1px 1px 3px #a0c8ff;
-  user-select: none;
 }
 
-/* Labels */
-label {
+h1 small {
   display: block;
-  margin: 1rem 0 0.6rem 0;
-  font-weight: 700;
-  font-size: 1.05rem;
-  cursor: pointer;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.3rem;
 }
 
-/* Form elements */
-select, textarea {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #0077cc;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  background: #e6f0ff;
-  color: #004080;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease, box-shadow 0.4s ease, background-color 0.3s ease;
-}
-
-select:hover, textarea:hover {
-  border-color: #005fa3;
-  box-shadow: 0 0 12px #005fa3aa;
-  background-color: #f0f8ff;
-}
-
-select:focus, textarea:focus {
-  border-color: #005fa3;
-  box-shadow: 0 0 16px #005fa3dd;
-  background-color: #fff;
-  outline: 2px solid #004080;
-  outline-offset: 2px;
-}
-
-/* Button */
-button {
-  margin-top: 2rem;
-  width: 100%;
-  padding: 1rem;
+/* ===== Form Fields ===== */
+form fieldset {
   border: none;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: 800;
-  cursor: pointer;
-  color: white;
-  background: linear-gradient(45deg, #005fa3, #0077cc);
-  box-shadow: 0 10px 20px rgba(0, 95, 163, 0.6);
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 1.5rem;
 }
 
-button:hover,
-button:focus-visible {
-  background: linear-gradient(45deg, #0077cc, #005fa3);
-  transform: scale(1.05);
-  box-shadow: 0 14px 28px rgba(0, 95, 163, 0.8);
+form legend {
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 0.6rem;
+  font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus,
+textarea:focus {
+  border-color: #3498db;
   outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
-button:active {
-  transform: scale(0.97);
-}
-
-/* Floating label */
+/* ===== Floating Label (Textarea) ===== */
 .floating-label {
   position: relative;
-  margin-top: 1.5rem;
 }
 
 .floating-label textarea {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1rem;
-  border: 2px solid #0077cc;
-  border-radius: 8px;
-  background: #f9f9f9;
-  font-family: inherit;
-  box-sizing: border-box;
+  resize: none;
 }
 
 .floating-label label {
   position: absolute;
-  left: 14px;
-  top: 14px;
-  background: white;
-  padding: 0 6px;
-  color: #666;
-  font-size: 1rem;
+  top: 0.9rem;
+  left: 1rem;
+  font-size: 0.95rem;
+  color: #888;
   pointer-events: none;
-  transition: 0.2s ease all;
+  transition: 0.3s ease;
 }
 
 .floating-label textarea:focus + label,
 .floating-label textarea:not(:placeholder-shown) + label {
-  top: -10px;
-  left: 10px;
+  top: -0.6rem;
+  left: 0.8rem;
+  background: #fff;
+  font-size: 0.75rem;
+  color: #3498db;
+  padding: 0 0.3rem;
+  border-radius: 0.3rem;
+}
+
+/* ===== Hint Text ===== */
+.hint-text {
+  display: block;
   font-size: 0.8rem;
-  color: #005fa3;
+  color: #777;
+  margin-top: 0.2rem;
 }
 
-/* Contact info */
-.contact-info {
-  margin-top: 1.5rem;
-  font-size: 0.95rem;
-  text-align: center;
-  color: #004080;
+/* ===== Button ===== */
+button {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(135deg, #3498db, #2ecc71);
+  border: none;
+  border-radius: 0.6rem;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.4s ease, transform 0.2s ease;
 }
 
-.contact-info a {
-  color: #0077cc;
-  text-decoration: none;
-  font-weight: 600;
+button:hover {
+  background: linear-gradient(135deg, #2980b9, #27ae60);
+  transform: translateY(-2px);
 }
 
-.contact-info a:hover,
-.contact-info a:focus {
-  text-decoration: underline;
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-/* Modal */
+/* ===== Modal ===== */
 .modal {
   display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 85, 170, 0.4);
   justify-content: center;
   align-items: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
 .modal-content {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  color: #005fa3;
+  background: #fff;
+  padding: 1.2rem 1.5rem;
+  border-radius: 0.8rem;
+  font-size: 1rem;
   font-weight: bold;
-  text-align: center;
-  box-shadow: 0 0 20px rgba(0, 119, 204, 0.5);
-  max-width: 90vw;
+  color: #333;
+  animation: pulse 1.2s infinite;
 }
 
-/* Error message */
+/* ===== Error Message ===== */
 .error-message {
-  display: none;
-  color: #b00020;
-  font-size: 1.1rem;
-  text-align: center;
   margin-top: 1rem;
+  padding: 0.8rem;
+  background: #ffe6e6;
+  color: #d63031;
+  border: 1px solid #ff7675;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  text-align: center;
 }
 
-/* Animations */
+/* ===== Contact Info ===== */
+.contact-info {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.contact-info a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Animations ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Responsive */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
   .container {
     padding: 1.5rem;
-    width: 95%;
   }
 
   h1 {
-    font-size: 2rem;
-  }
-
-  select, textarea {
-    font-size: 1rem;
-  }
-
-  button {
-    font-size: 1rem;
-    padding: 0.9rem;
+    font-size: 1.5rem;
   }
 }
