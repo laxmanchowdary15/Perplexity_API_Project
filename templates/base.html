@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Class 10 Model Paper Generator</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <title>Model Paper Generator</title>
+  
+  <!-- Link CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
   <div class="container">
     {% block content %}{% endblock %}
   </div>
 
-  <script src="{{ url_for('static', filename='chapters.js') }}"></script>
+  <!-- Load JS files at bottom for faster page load -->
+  <script src="{{ url_for('static', filename='js/chapters.js') }}"></script>
 </body>
 </html>

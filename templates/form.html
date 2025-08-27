@@ -13,7 +13,7 @@
   </select>
 
   <label for="chapter">📖 Select a Chapter</label>
-  <select name="chapter" id="chapter" required disabled>
+  <select name="chapter" id="chapter" required>
     <option value="" disabled selected>Choose a chapter...</option>
   </select>
 
@@ -26,4 +26,26 @@
 
   <button type="submit">Generate PDF & Download 🚀</button>
 </form>
+
+<script>
+  // Populate chapters based on selected subject
+  const subjectSelect = document.getElementById('subject');
+  const chapterSelect = document.getElementById('chapter');
+
+  subjectSelect.addEventListener('change', () => {
+    const subject = subjectSelect.value;
+    const chapters = getChapters(subject);
+
+    // Clear previous chapters
+    chapterSelect.innerHTML = '<option value="" disabled selected>Choose a chapter...</option>';
+
+    // Add new chapters
+    chapters.forEach(chapter => {
+      const option = document.createElement('option');
+      option.value = chapter;
+      option.textContent = chapter;
+      chapterSelect.appendChild(option);
+    });
+  });
+</script>
 {% endblock %}
