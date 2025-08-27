@@ -18,24 +18,34 @@ def generate_paper(subject, chapter, difficulty):
     return response.choices[0].message.content
 
 def create_exam_pdf(text, subject, chapter):
+    from fpdf import FPDF
+    import os
+
     pdf = FPDF()
     pdf.add_page()
 
-    # Add a Unicode capable TTF font - DejaVuSans is a good free font
-    # Make sure you have 'DejaVuSans.ttf' in a 'fonts' folder or same folder as app.py
-    pdf.add_font('DejaVu', '', 'static/fonts/DejaVuSans.ttf', uni=True)
+    # Set margins and font
+    pdf.set_margins(10, 10, 10)
+    pdf.add_font('DejaVu', '', os.path.join(os.path.dirname(__file__), 'fonts', 'DejaVuSans.ttf'), uni=True)
     pdf.set_font("DejaVu", size=12)
 
+    # Calculate printable width
+    page_width = pdf.w - 2 * pdf.l_margin
+
+    # Header
     header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 10, header, ln=1, align="C")
     pdf.ln(5)
 
-    # Write all lines, supporting UTF-8 characters
+    # Add content line by line
     for line in text.split('\n'):
-        pdf.multi_cell(0, 8, line)
+        if line.strip() == "":
+            pdf.ln(5)
+        else:
+            pdf.multi_cell(page_width, 8, line)
 
-    # Return PDF as bytes directly (no encode needed)
-    return pdf.output(dest='S').encode('latin1')
+    return pdf.output(dest='S').encode('latin-1', 'replace')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
