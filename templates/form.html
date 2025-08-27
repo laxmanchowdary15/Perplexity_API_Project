@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
 {% block content %}
 <main class="container" role="main" aria-labelledby="pageTitle">
   <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Just for Class 10 - Stay tuned!) 🚀</small></h1>
@@ -40,15 +44,14 @@
       <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
     </fieldset>
 
-    <fieldset class="floating-label">
-      <textarea name="suggestions" id="suggestions" rows="4" placeholder=" "></textarea>
+    <fieldset>
       <label for="suggestions">📝 Any extra requirements? (Optional)</label>
+      <textarea name="suggestions" id="suggestions" rows="4" placeholder="Enter any additional notes here..."></textarea>
     </fieldset>
 
     <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
       Generate PDF &amp; Download 🚀
     </button>
-
   </form>
 
   <p class="contact-info" aria-label="Contact information">
@@ -104,6 +107,10 @@
 
   const subjectSelect = document.getElementById('subject');
   const chapterSelect = document.getElementById('chapter');
+  const form = document.getElementById('paperForm');
+  const button = document.getElementById('generateBtn');
+  const modal = document.getElementById('loadingModal');
+  const errorBox = document.getElementById('errorMessage');
 
   subjectSelect.addEventListener('change', () => {
     const subject = subjectSelect.value;
@@ -120,11 +127,6 @@
       chapterSelect.disabled = true;
     }
   });
-
-  const form = document.getElementById('paperForm');
-  const button = document.getElementById('generateBtn');
-  const modal = document.getElementById('loadingModal');
-  const errorBox = document.getElementById('errorMessage');
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
