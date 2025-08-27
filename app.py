@@ -12,7 +12,7 @@ def generate_paper(subject, chapter, difficulty):
               f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
               "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print.")
     response = client.chat.completions.create(
-        model="sonar-pro",
+        model="sonar-reasoning-pro",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
@@ -26,7 +26,8 @@ def create_exam_pdf(text, subject, chapter):
 
     # Set margins and font
     pdf.set_margins(10, 10, 10)
-    pdf.add_font('DejaVu', '', os.path.join(os.path.dirname(__file__), 'fonts', 'DejaVuSans.ttf'), uni=True)
+    font_path = os.path.join(os.path.dirname(__file__), 'static', 'fonts', 'DejaVuSans.ttf')
+    pdf.add_font('DejaVu', '', font_path, uni=True)
     pdf.set_font("DejaVu", size=12)
 
     # Calculate printable width
