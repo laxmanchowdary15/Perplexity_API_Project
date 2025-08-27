@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Generate Model Paper{% endblock %}
+{% block title %}Generate Fun Model Paper 📝✨{% endblock %}
 
 {% block content %}
-<h1>Class 10 Model Paper Generator</h1>
+<h1>🎉 Class 10 Model Paper Generator 🎉</h1>
 <form method="post">
-  <label for="subject">Subject</label>
+  <label for="subject">📚 Choose Your Subject</label>
   <select name="subject" id="subject" required>
-    <option value="" disabled selected>Select Subject</option>
-    <option value="Maths">Maths</option>
-    <option value="Science">Science</option>
-    <option value="Social">Social</option>
-    <option value="English">English</option>
+    <option value="" disabled selected>Pick a subject!</option>
+    <option value="Maths">Maths ➗</option>
+    <option value="Science">Science 🔬</option>
+    <option value="Social">Social Studies 🌍</option>
+    <option value="English">English 📖</option>
   </select>
 
-  <label for="chapter">Chapter</label>
+  <label for="chapter">📖 Select a Chapter</label>
   <select name="chapter" id="chapter" required>
-    <option value="" disabled selected>Select Chapter</option>
+    <option value="" disabled selected>Choose a chapter...</option>
   </select>
 
-  <label for="difficulty">Difficulty</label>
+  <label for="difficulty">🎯 How tough should it be?</label>
   <select name="difficulty" id="difficulty" required>
-    <option value="easy">Easy</option>
-    <option value="moderate">Moderate</option>
-    <option value="difficult">Difficult</option>
+    <option value="easy">Easy Peasy 🍋</option>
+    <option value="moderate">Moderate 🎯</option>
+    <option value="difficult">Challenge Mode 💥</option>
   </select>
 
-  <button type="submit">Generate PDF</button>
+  <button type="submit">Generate PDF & Download 🚀</button>
 </form>
 {% endblock %}
