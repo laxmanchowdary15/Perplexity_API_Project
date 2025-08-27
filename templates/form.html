@@ -2,25 +2,24 @@
 
 {% block content %}
 <main class="container" role="main" aria-labelledby="pageTitle">
-  <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Class 10 Only 🚀)</small></h1>
+  <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Just for Class 10 - Stay tuned!) 🚀</small></h1>
 
-  <form id="paperForm" method="post" aria-describedby="formInstructions" novalidate>
+  <form id="paperForm" aria-describedby="formInstructions" novalidate>
     <p id="formInstructions" class="sr-only">Fill in the form below to generate your model paper PDF.</p>
 
-    <!-- Subject Selection -->
     <fieldset>
       <legend>📚 Choose Your Subject</legend>
       <label for="subject" class="sr-only">Subject</label>
       <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
         <option value="" disabled selected>Pick a subject</option>
-        {% for subject in subjects %}
-          <option value="{{ subject }}">{{ subject }}</option>
-        {% endfor %}
+        <option value="Maths">Maths ➗</option>
+        <option value="Science">Science 🔬</option>
+        <option value="Social">Social Studies 🌍</option>
+        <option value="English">English 📖</option>
       </select>
       <small id="subjectHint" class="hint-text">Select one subject to proceed</small>
     </fieldset>
 
-    <!-- Chapter Selection -->
     <fieldset>
       <legend>📖 Select a Chapter</legend>
       <label for="chapter" class="sr-only">Chapter</label>
@@ -30,7 +29,6 @@
       <small id="chapterHint" class="hint-text">Choose a chapter based on selected subject</small>
     </fieldset>
 
-    <!-- Difficulty Selection -->
     <fieldset>
       <legend>🎯 Difficulty Level</legend>
       <label for="difficulty" class="sr-only">Difficulty</label>
@@ -42,16 +40,15 @@
       <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
     </fieldset>
 
-    <!-- Suggestions -->
     <fieldset class="floating-label">
       <textarea name="suggestions" id="suggestions" rows="4" placeholder=" "></textarea>
       <label for="suggestions">📝 Any extra requirements? (Optional)</label>
     </fieldset>
 
-    <!-- Submit Button -->
     <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
       Generate PDF &amp; Download 🚀
     </button>
+
   </form>
 
   <p class="contact-info" aria-label="Contact information">
@@ -71,7 +68,39 @@
 </main>
 
 <script>
-  const chaptersBySubject = {{ chapters_by_subject | tojson }};
+  const chaptersBySubject = {
+    "Maths": [
+      "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
+      "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
+      "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
+      "Circles", "Constructions", "Areas Related to Circles", "Surface Areas and Volumes", 
+      "Statistics", "Probability"
+    ],
+    "Science": [
+      "Chemical Reactions and Equations", "Acids, Bases, and Salts", "Metals and Non-Metals",
+      "Carbon and Its Compounds", "Periodic Classification of Elements", "Life Processes",
+      "Control and Coordination", "How do Organisms Reproduce?", "Heredity and Evolution",
+      "Light – Reflection and Refraction", "The Human Eye and the Colourful World", "Electricity",
+      "Magnetic Effects of Electric Current", "Sources of Energy"
+    ],
+    "Social": [
+      "Nationalism in India", "The Making of a Global World", "The Age of Industrialization",
+      "Print Culture and the Modern World", "Resources and Development", "Forest and Wildlife Resources",
+      "Water Resources", "Agriculture", "Minerals and Energy Resources", "Manufacturing Industries",
+      "Lifelines of National Economy", "Power Sharing", "Federalism", "Democracy and Diversity",
+      "Gender, Religion and Caste", "Popular Struggles and Movements", "Political Parties",
+      "Outcomes of Democracy", "Challenges to Democracy"
+    ],
+    "English": [
+      "A Letter to God", "Nelson Mandela: Long Walk to Freedom", "Two Stories about Flying",
+      "From the Diary of Anne Frank", "Glimpses of India", "Mijbil the Otter",
+      "Madam Rides the Bus", "The Hundred Dresses", "The Hundred Dresses – II",
+      "A Baker from Goa", "Amanda", "Animals", "The Trees", "Fog", "The Tale of Custard the Dragon",
+      "The Ball Poem", "The Invisible Man", "The Treasure within", "Footprints without Feet",
+      "The Magic Drum and Other Favourite Stories", "The Necklace", "The Hack Driver",
+      "Bholi", "The Book that Saved the Earth"
+    ]
+  };
 
   const subjectSelect = document.getElementById('subject');
   const chapterSelect = document.getElementById('chapter');
