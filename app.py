@@ -220,7 +220,7 @@ def index():
 
         response = make_response(pdf_content)
         response.headers.set('Content-Type', 'application/pdf')
-        response.headers.set('Content-Disposition', 'attachment', filename=filename=f"{subject}_{chapter}.pdf")
+        response.headers.set('Content-Disposition', 'attachment', filename=f"{subject}_{chapter}.pdf")
         return response
 
     return render_template('form.html')
