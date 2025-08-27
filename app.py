@@ -167,9 +167,9 @@ def create_exam_pdf(text, subject, chapter):
 
     # Load Unicode font
     font_path = os.path.join(os.path.dirname(__file__), 'static', 'fonts', 'DejaVuSans.ttf')
-    pdf.add_font("DejaVu", "", font_path, uni=True)
-    pdf.add_font("DejaVu", "B", font_path, uni=True)
-    pdf.add_font("DejaVu", "I", font_path, uni=True)
+    pdf.add_font("DejaVu", "", font_path)
+    pdf.add_font("DejaVu", "B", font_path)
+    pdf.add_font("DejaVu", "I", font_path)
 
     page_width = pdf.w - 2 * pdf.l_margin
 
@@ -202,7 +202,7 @@ def create_exam_pdf(text, subject, chapter):
     pdf.set_font("DejaVu", "I", 12)
     pdf.cell(0, 10, "*End of Paper*", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
-    return pdf.output(dest="S").encode("latin1")  # PDF as bytes
+    return pdf.output(dest="S") # PDF as bytes
 
 # -------------------- Routes --------------------
 
