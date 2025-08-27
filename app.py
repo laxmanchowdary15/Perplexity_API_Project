@@ -127,7 +127,7 @@ client = OpenAI(
 )
 
 # -------------------- Generate Paper --------------------
-def generate_paper(subject, chapter, difficulty):
+def generate_paper(subject, chapter, difficulty,suggestions):
     prompt = (
         f"Create a model paper for class 10 {subject}, "
         f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
@@ -188,8 +188,8 @@ def create_exam_pdf(text, subject, chapter):
             pdf.ln(3)
         else:
             pdf.set_font("DejaVu", "", 12)
-            pdf.multi_cell(page_width, 6, line)
-            pdf.ln(1)
+            pdf.multi_cell(page_width, 7.5, line)
+            pdf.ln(0.5)
 
     # Footer
     pdf.ln(5)
@@ -206,8 +206,9 @@ def index():
         subject = request.form['subject']
         chapter = request.form['chapter']
         difficulty = request.form['difficulty']
+        suggestions = request.form.get('suggestions', '')
 
-        paper_text = generate_paper(subject, chapter, difficulty)
+        paper_text = generate_paper(subject, chapter, difficulty, suggestions)
         pdf_content = create_exam_pdf(paper_text, subject, chapter)
 
         response = Response(pdf_content, mimetype='application/pdf')
