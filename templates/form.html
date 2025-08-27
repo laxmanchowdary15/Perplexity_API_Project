@@ -1,53 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>🎉 Model Paper Generator 🎉 (Just for Class 10 - for now! Stay tuned! 🚀)</h1>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<form id="paperForm">
-  <label for="subject">📚 Choose Your Subject</label>
-  <select name="subject" id="subject" required>
-    <option value="" disabled selected>Pick a subject!</option>
-    <option value="Maths">Maths ➗</option>
-    <option value="Science">Science 🔬</option>
-    <option value="Social">Social Studies 🌍</option>
-    <option value="English">English 📖</option>
-  </select>
+<!--
+  Make sure your base.html includes
+  <head> with a <meta name="viewport" content="width=device-width, initial-scale=1" />
+  Ideally in base.html's <head> section, but including here won't break if missing.
+-->
 
-  <label for="chapter">📖 Select a Chapter</label>
-  <select name="chapter" id="chapter" required>
-    <option value="" disabled selected>Choose a chapter...</option>
-  </select>
+<div class="container">
+  <h1>🎉 Model Paper Generator 🎉 (Just for Class 10 - for now! Stay tuned! 🚀)</h1>
 
-  <label for="difficulty">🎯 How tough should it be?</label>
-  <select name="difficulty" id="difficulty" required>
-    <option value="easy">Easy Peasy 🍋</option>
-    <option value="moderate">Moderate 🎯</option>
-    <option value="difficult">Challenge Mode 💥</option>
-  </select>
+  <form id="paperForm">
+    <label for="subject">📚 Choose Your Subject</label>
+    <select name="subject" id="subject" required>
+      <option value="" disabled selected>Pick a subject!</option>
+      <option value="Maths">Maths ➗</option>
+      <option value="Science">Science 🔬</option>
+      <option value="Social">Social Studies 🌍</option>
+      <option value="English">English 📖</option>
+    </select>
 
-  <div class="floating-label">
-    <textarea name="suggestions" id="suggestions" rows="3" placeholder=" "></textarea>
-    <label for="suggestions">📝 Any extra requirements? (Optional)</label>
+    <label for="chapter">📖 Select a Chapter</label>
+    <select name="chapter" id="chapter" required>
+      <option value="" disabled selected>Choose a chapter...</option>
+    </select>
+
+    <label for="difficulty">🎯 How tough should it be?</label>
+    <select name="difficulty" id="difficulty" required>
+      <option value="easy">Easy Peasy 🍋</option>
+      <option value="moderate">Moderate 🎯</option>
+      <option value="difficult">Challenge Mode 💥</option>
+    </select>
+
+    <div class="floating-label">
+      <textarea name="suggestions" id="suggestions" rows="3" placeholder=" "></textarea>
+      <label for="suggestions">📝 Any extra requirements? (Optional)</label>
+    </div>
+
+    <button type="submit" id="generateBtn">Generate PDF & Download 🚀</button>
+  </form>
+
+  <p class="contact-info">
+    🛠️ Any issues, please report to <strong>Laxman Nimmagadda</strong>, mail: 
+    <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
+  </p>
+
+  <!-- Modal -->
+  <div id="loadingModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      ⏳ Generating your PDF, please wait...
+    </div>
   </div>
 
-  <button type="submit" id="generateBtn">Generate PDF & Download 🚀</button>
-</form>
-
-<p class="contact-info">
-  🛠️ Any issues, please report to <strong>Laxman Nimmagadda</strong>, mail: 
-  <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
-</p>
-
-<!-- Modal -->
-<div id="loadingModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    ⏳ Generating your PDF, please wait...
+  <!-- Error Message -->
+  <div id="errorMessage" class="error-message">
+    ❌ Something went wrong. Please try again.
   </div>
-</div>
-
-<!-- Error Message -->
-<div id="errorMessage" class="error-message">
-  ❌ Something went wrong. Please try again.
 </div>
 
 <script>

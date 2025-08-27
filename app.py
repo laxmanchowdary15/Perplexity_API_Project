@@ -202,7 +202,7 @@ def create_exam_pdf(text, subject, chapter):
     pdf.set_font("DejaVu", "I", 12)
     pdf.cell(0, 10, "*End of Paper*", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
-    return pdf.output(dest="S") # PDF as bytes
+    return bytes(pdf.output(dest="S"))
 
 # -------------------- Routes --------------------
 
@@ -217,9 +217,9 @@ def index():
         paper_text = generate_paper(subject, chapter, difficulty, suggestions)
         pdf_content = create_exam_pdf(paper_text, subject, chapter)
 
-        response = Response(pdf_content, mimetype='application/pdf')
-        response.headers.set('Content-Disposition', 'attachment', filename=f"{subject}_{chapter}_model_paper.pdf")
-        response.headers['Content-Length'] = len(pdf_content)
+        response = make_response(pdf_bytes)
+        response.headers.set('Content-Type', 'application/pdf')
+        response.headers.set('Content-Disposition', 'attachment', filename='exam.pdf')
         return response
 
     return render_template('form.html')
