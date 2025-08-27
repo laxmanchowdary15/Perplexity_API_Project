@@ -12,7 +12,7 @@ def generate_paper(subject, chapter, difficulty):
               f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
               "C (2x4), D (1x4), with suitable questions. Output in print-friendly text.")
     response = client.chat.completions.create(
-        model="pplx-7b-chat",  # <-- updated here
+        model="sonar-pro",  # <-- updated here
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
