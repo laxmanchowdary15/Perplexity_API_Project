@@ -14,7 +14,7 @@ def generate_paper(subject, chapter, difficulty):
         "C (2x4), D (1x4), with suitable questions. Output in plain text, easy to print."
     )
     response = client.chat.completions.create(
-        model="sonar-reasoning-pro",
+        model="sonar-pro",
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
