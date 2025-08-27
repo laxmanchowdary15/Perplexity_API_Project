@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: radial-gradient(circle at top left, #ffecd2, #fcb69f);
+  background: radial-gradient(circle at top left, #d0eaff, #a0c8ff);
   margin: 0;
   padding: 2rem;
   display: flex;
@@ -10,8 +10,8 @@ body {
   align-items: center;
   min-height: 100vh;
   background-image:
-    radial-gradient(#fff4 15%, transparent 16%),
-    radial-gradient(#fff4 15%, transparent 16%);
+    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%),
+    radial-gradient(rgba(255, 255, 255, 0.8) 15%, transparent 16%);
   background-position: 0 0, 8px 8px;
   background-size: 16px 16px;
 }
@@ -20,21 +20,23 @@ body {
   background: white;
   padding: 2.5rem 3.5rem;
   border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(255, 182, 193, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 119, 204, 0.3);
   width: 100%;
   max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;  /* enable scroll if content exceeds */
   animation: fadeIn 1s ease forwards;
-  border: 4px dashed #ff6f91;
+  border: 4px dashed #0077cc;
 }
 
 h1 {
   font-family: 'Comic Neue', cursive;
   text-align: center;
-  color: #ff4081;
+  color: #005fa3;
   margin-bottom: 2rem;
   letter-spacing: 2px;
   font-size: 2.8rem;
-  text-shadow: 1px 1px 3px #fbc4ab;
+  text-shadow: 1px 1px 3px #a0c8ff;
   user-select: none;
 }
 
@@ -42,7 +44,7 @@ label {
   display: block;
   margin: 1rem 0 0.6rem 0;
   font-weight: 700;
-  color: #d81e5b;
+  color: #004080;
   font-size: 1.1rem;
   cursor: pointer;
 }
@@ -50,26 +52,26 @@ label {
 select, input[type="text"] {
   width: 100%;
   padding: 0.65rem 1rem;
-  border: 3px solid #ff6f91;
+  border: 3px solid #0077cc;
   border-radius: 12px;
   font-size: 1.1rem;
   transition: border-color 0.3s ease, box-shadow 0.4s ease;
   outline: none;
   box-sizing: border-box;
-  background: #fff0f6;
-  color: #ad1457;
+  background: #e6f0ff;
+  color: #004080;
   font-weight: 600;
   letter-spacing: 0.05em;
 }
 
 select:hover, input[type="text"]:hover {
-  border-color: #ff2e63;
-  box-shadow: 0 0 15px #ff2e63aa;
+  border-color: #005fa3;
+  box-shadow: 0 0 15px #005fa3aa;
 }
 
 select:focus, input[type="text"]:focus {
-  border-color: #ff2e63;
-  box-shadow: 0 0 20px #ff2e63dd;
+  border-color: #005fa3;
+  box-shadow: 0 0 20px #005fa3dd;
 }
 
 button {
@@ -77,21 +79,21 @@ button {
   width: 100%;
   padding: 0.9rem;
   border: none;
-  background: linear-gradient(45deg, #ff2e63, #ff6f91);
+  background: linear-gradient(45deg, #005fa3, #0077cc);
   color: white;
   font-size: 1.3rem;
   font-weight: 900;
   border-radius: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 10px 20px rgba(255, 46, 99, 0.6);
+  box-shadow: 0 10px 20px rgba(0, 95, 163, 0.6);
   user-select: none;
 }
 
 button:hover {
-  background: linear-gradient(45deg, #ff6f91, #ff2e63);
+  background: linear-gradient(45deg, #0077cc, #005fa3);
   transform: scale(1.1) rotate(-3deg);
-  box-shadow: 0 14px 30px rgba(255, 46, 99, 0.8);
+  box-shadow: 0 14px 30px rgba(0, 95, 163, 0.8);
 }
 
 button:active {
