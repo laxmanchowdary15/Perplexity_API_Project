@@ -138,10 +138,23 @@ def generate_paper(subject, chapter, difficulty):
         messages=[{"role": "user", "content": prompt}]
     )
     return response.choices[0].message.content
+def sanitize_text(text):
+    replacements = {
+        '–': '-',
+        '—': '-',
+        '“': '"',
+        '”': '"',
+        '‘': "'",
+        '’': "'",
+    }
+    for orig, repl in replacements.items():
+        text = text.replace(orig, repl)
+    return text
 
 def create_exam_pdf(raw_text, subject, chapter):
     text = clean_math_latex(raw_text)
-    
+    text = sanitize_text(text)  # sanitize special unicode characters
+
     pdf = FPDF()
     pdf.add_page()
     pdf.set_margins(15, 15, 15)
@@ -175,7 +188,7 @@ def create_exam_pdf(raw_text, subject, chapter):
     pdf.set_font("Helvetica", 'I', 12)
     pdf.cell(0, 10, "*End of Paper*", new_x=XPos.LMARGIN, new_y=YPos.NEXT, align="C")
 
-    pdf_bytes = bytes(pdf.output())  # convert bytearray to bytes
+    pdf_bytes = bytes(pdf.output())
     return pdf_bytes
 
 @app.route('/', methods=['GET', 'POST'])
