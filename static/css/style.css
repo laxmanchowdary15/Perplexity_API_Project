@@ -1,6 +1,18 @@
 /* static/style.css */
 
 /* Container fills almost full viewport width and height with some padding */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100vh;  /* 100% of viewport height */
+  display: flex;
+  justify-content: center;  /* Center content horizontally */
+  align-items: center;      /* Center content vertically if you want */
+  background-color: #f5f7fa;  /* Light background fill */
+}
 main.container {
   max-width: 95vw; /* almost full viewport width */
   width: 100%;
