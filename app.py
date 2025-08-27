@@ -23,7 +23,7 @@ def create_exam_pdf(text, subject, chapter):
 
     # Add a Unicode capable TTF font - DejaVuSans is a good free font
     # Make sure you have 'DejaVuSans.ttf' in a 'fonts' folder or same folder as app.py
-    pdf.add_font('DejaVu', '', 'fonts/DejaVuSans.ttf', uni=True)
+    pdf.add_font('DejaVu', '', 'static/fonts/DejaVuSans.ttf', uni=True)
     pdf.set_font("DejaVu", size=12)
 
     header = f"Class 10 Model Paper - {subject} - {chapter}"
