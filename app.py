@@ -171,12 +171,12 @@ def create_exam_pdf(raw_text, subject, chapter):
             pdf.multi_cell(page_width, 6, line)
             pdf.ln(2)
 
-    # Footer
     pdf.ln(10)
     pdf.set_font("Arial", 'I', 12)
     pdf.cell(0, 10, "*End of Paper*", ln=True, align="C")
 
-    pdf_bytes = pdf.output(dest='S').encode('latin1')
+    # Just return the bytearray directly, no encode
+    pdf_bytes = pdf.output(dest='S')
     return pdf_bytes
 
 @app.route('/', methods=['GET', 'POST'])
