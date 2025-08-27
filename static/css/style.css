@@ -287,3 +287,46 @@ button:active {
     padding: 0.75rem;
   }
 }
+.floating-label {
+  position: relative;
+  margin-top: 20px;
+}
+
+.floating-label textarea {
+  width: 100%;
+  padding: 12px 12px 12px 12px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  background: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.floating-label label {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  background: white;
+  padding: 0 6px;
+  color: #999;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: 0.3s ease all;
+  border-radius: 4px;
+}
+
+.floating-label textarea:focus {
+  outline: none;
+  border-color: #7873f5;
+  background: #fff;
+}
+
+.floating-label textarea:focus + label,
+.floating-label textarea:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 10px;
+  font-size: 0.8rem;
+  color: #7873f5;
+}
