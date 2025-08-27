@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <main class="container" role="main" aria-labelledby="pageTitle">
   <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Just for Class 10 - Stay tuned!) 🚀</small></h1>
 
@@ -63,7 +62,9 @@
   </div>
 
   <!-- Error Message -->
-  <div id="errorMessage" class="error-message" role="alert" aria-live="assertive">❌ Something went wrong. Please try again.</div>
+  <div id="errorMessage" class="error-message" role="alert" aria-live="assertive" style="display:none;">
+    ❌ Something went wrong. Please try again.
+  </div>
 </main>
 
 <script>
@@ -160,4 +161,3 @@
   });
 </script>
 {% endblock %}
-
