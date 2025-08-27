@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, Response
 import os
 from openai import OpenAI
-from fpdf import FPDF
+from fpdf import FPDF  # fpdf2 is imported the same way
 import io
 
 app = Flask(__name__)
@@ -20,16 +20,22 @@ def generate_paper(subject, chapter, difficulty):
 def create_exam_pdf(text, subject, chapter):
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font("Courier", size=12)
+
+    # Add a Unicode capable TTF font - DejaVuSans is a good free font
+    # Make sure you have 'DejaVuSans.ttf' in a 'fonts' folder or same folder as app.py
+    pdf.add_font('DejaVu', '', 'fonts/DejaVuSans.ttf', uni=True)
+    pdf.set_font("DejaVu", size=12)
 
     header = f"Class 10 Model Paper - {subject} - {chapter}"
     pdf.cell(0, 10, header, ln=1, align="C")
     pdf.ln(5)
 
+    # Write all lines, supporting UTF-8 characters
     for line in text.split('\n'):
         pdf.multi_cell(0, 8, line)
 
-    return pdf.output(dest='S').encode('latin-1', 'replace')
+    # Return PDF as bytes directly (no encode needed)
+    return pdf.output(dest='S').encode('latin1')
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -39,6 +45,7 @@ def index():
         difficulty = request.form['difficulty']
 
         paper_text = generate_paper(subject, chapter, difficulty)
+
         pdf_content = create_exam_pdf(paper_text, subject, chapter)
 
         pdf_stream = io.BytesIO(pdf_content)
