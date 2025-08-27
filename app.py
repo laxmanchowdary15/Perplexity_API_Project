@@ -149,7 +149,7 @@ def sanitize_text(text):
 
 def create_exam_pdf(raw_text, subject, chapter):
     # text = clean_math_latex(raw_text)
-    text = sanitize_text(text)
+    text = sanitize_text(raw_text)
 
     header = f"Class 10 Model Paper - {subject} - {chapter}"
     header = sanitize_text(header)  # sanitize header text too
