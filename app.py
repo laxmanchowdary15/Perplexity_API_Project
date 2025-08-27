@@ -218,7 +218,7 @@ def index():
         paper_text = generate_paper(subject, chapter, difficulty, suggestions)
         pdf_content = create_exam_pdf(paper_text, subject, chapter)
 
-        response = make_response(pdf_bytes)
+        response = make_response(pdf_content)
         response.headers.set('Content-Type', 'application/pdf')
         response.headers.set('Content-Disposition', 'attachment', filename='exam.pdf')
         return response
