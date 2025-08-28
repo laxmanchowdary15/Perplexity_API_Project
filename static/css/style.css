@@ -1,27 +1,30 @@
-/* static/style.css */
-
-/* Container fills almost full viewport width and height with some padding */
+/* Reset and base */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-body {
-  height: 100vh;  /* 100% of viewport height */
-  display: flex;
-  justify-content: center;  /* Center content horizontally */
-  align-items: center;      /* Center content vertically if you want */
-  background-color: #f5f7fa;  /* Light background fill */
-}
-/* Make all paragraphs bigger and wider */
-p {
-  font-size: 1.75rem;      /* Larger font size */
-  font-weight: 600;        /* Slightly bolder */
-  letter-spacing: 0.07em;  /* Wider spacing between letters */
-  color: #333;             /* Darker text color for contrast */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  box-sizing: border-box;
 }
 
-/* Make all legends bigger and bolder */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Typography */
+h1 {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
 legend {
   font-size: 1.8rem;
   font-weight: 700;
@@ -29,42 +32,32 @@ legend {
   color: #222;
 }
 
-/* Widen small text (like small hints) and increase font size */
-small {
-  font-size: 1.8rem;
+p {
+  font-size: 1.75rem;
+  font-weight: 600;
   letter-spacing: 0.07em;
-  color: #555;
-  font-weight: 500;
+  color: #333;
 }
 
-/* Also apply consistent styling to labels */
-label {
+small, label {
   font-size: 1.8rem;
   letter-spacing: 0.07em;
   font-weight: 600;
   color: #333;
 }
 
-/* Optionally increase heading sizes further for emphasis */
-h1 {
-  font-size: 2.8rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
-  color: #111;
+small.hint-text {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.25rem;
 }
 
-/* Subheadings inside form */
-fieldset > legend {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #222;
-}
-
+/* Container layout */
 main.container {
-  max-width: 95vw; /* almost full viewport width */
+  max-width: 95vw;
   width: 100%;
-  min-height: 80vh; /* fill most vertical space */
+  min-height: 80vh;
   margin: 1.5rem auto;
   padding: 2rem 3rem;
   background: #fafafa;
@@ -72,20 +65,10 @@ main.container {
   box-shadow: 0 0 18px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* evenly spread content vertically */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
+  justify-content: space-between;
 }
 
-/* Title styles */
-h1 {
-  text-align: center;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-/* Form styles: flex column with spacing */
+/* Form styles */
 form {
   width: 100%;
   flex-grow: 1;
@@ -94,7 +77,6 @@ form {
   gap: 1.8rem;
 }
 
-/* Fieldsets spacing */
 form fieldset {
   border: none;
   margin: 0;
@@ -102,7 +84,12 @@ form fieldset {
   width: 100%;
 }
 
-/* Legends styling */
+form fieldset + fieldset {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
 form legend {
   font-size: 1.1rem;
   font-weight: 600;
@@ -110,44 +97,49 @@ form legend {
   color: #444;
 }
 
-/* Inputs, selects, textarea, buttons full width */
-label, select, textarea, button {
+/* Form inputs and textareas */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
   display: block;
   width: 100%;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-/* Select and textarea styling */
-select, textarea {
   padding: 0.7rem 1rem;
-  border-radius: 6px;
+  font-size: 1rem;
   border: 1.8px solid #ccc;
+  border-radius: 6px;
   background: #fff;
-  transition: border-color 0.25s ease;
+  line-height: 1.4;
+  transition: all 0.3s ease-in-out;
 }
 
-select:focus, textarea:focus {
+select:focus,
+textarea:focus,
+input:focus {
   border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.25);
   outline: none;
 }
 
-/* Textarea extended height and resize vertical */
+input:invalid,
+textarea:invalid {
+  border-color: #d93025;
+}
+
 textarea#suggestions {
   min-height: 140px;
   max-height: 280px;
   resize: vertical;
 }
 
-/* Hint text style */
-.hint-text {
+/* Placeholder style */
+::placeholder {
+  color: #999;
   font-style: italic;
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.25rem;
 }
 
-/* Generate button style - centered, bigger, noticeable */
+/* Button */
 button#generateBtn {
   align-self: center;
   width: 240px;
@@ -161,11 +153,14 @@ button#generateBtn {
   color: white;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
 }
 
 button#generateBtn:hover:not(:disabled) {
   background-color: #0056b3;
+  transform: scale(1.03);
+  box-shadow: 0 6px 18px rgba(0, 123, 255, 0.35);
 }
 
 button#generateBtn:disabled {
@@ -173,15 +168,7 @@ button#generateBtn:disabled {
   cursor: not-allowed;
 }
 
-/* Contact info text */
-.contact-info {
-  font-size: 0.9rem;
-  color: #444;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-/* Modal overlay and message */
+/* Modal styles */
 .modal {
   display: none;
   position: fixed;
@@ -204,6 +191,14 @@ button#generateBtn:disabled {
   padding: 1.4rem 2.2rem;
   border-radius: 10px;
   box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  max-width: 500px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Error message */
@@ -212,4 +207,32 @@ button#generateBtn:disabled {
   font-weight: 600;
   margin-top: 1rem;
   text-align: center;
+}
+
+/* Contact info */
+.contact-info {
+  font-size: 0.9rem;
+  color: #444;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Zoom wrapper for scaleToFit */
+.zoom-wrapper {
+  transform-origin: top left;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  main.container {
+    padding: 1.5rem;
+  }
+
+  button#generateBtn {
+    width: 100%;
+  }
+
+  textarea, select, input {
+    font-size: 1rem;
+  }
 }
