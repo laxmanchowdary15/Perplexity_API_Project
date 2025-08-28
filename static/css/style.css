@@ -33,17 +33,17 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem 1rem;
+  padding: 0;
 }
 
 /* Main container for the entire form */
 main.container {
-  width: 95%;
-  max-width: 1400px;
+  flex: 1;
   padding: 3rem;
   background: #ffffff;
-  border-radius: 16px;
-  box-shadow: var(--shadow-md);
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -84,7 +84,7 @@ legend {
   gap: 0.5rem;
 }
 
-/* Form Layout with an Advanced Grid */
+/* Form Layout with a Flexible Grid */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -108,7 +108,7 @@ legend {
 
 /* Full-width elements */
 .suggestions-card, .button-container {
-  grid-column: 1 / -1; /* Make these elements span all grid columns */
+  grid-column: 1 / -1;
 }
 
 /* Form Fields */
