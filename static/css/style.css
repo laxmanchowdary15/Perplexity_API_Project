@@ -8,7 +8,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', 'Inter', sans-serif;
-  background-color: #f0f4f8; /* A light, professional grey-blue */
+  background-color: #eef2f8;
   color: #333;
 }
 
@@ -20,25 +20,29 @@ body {
   padding: 2rem 1rem;
 }
 
-/* Container layout */
+/* Main container and layout */
 main.container {
-  max-width: 900px; /* Increased max-width for better use of space */
-  width: 100%;
+  width: 90%; /* Use a larger percentage for wider screens */
+  max-width: 1200px; /* Set a max-width to prevent it from getting too wide */
   padding: 3rem;
   background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 /* Typography and Headings */
 h1 {
-  font-size: 2.25rem;
+  font-size: 2.8rem;
   font-weight: 700;
   color: #1a2a4b;
-  text-align: center;
   margin-bottom: 0.5rem;
 }
 
@@ -46,23 +50,37 @@ h1 {
   font-size: 1.1rem;
   font-weight: 400;
   color: #66778f;
-  text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.emoji {
+  font-size: 2.5rem;
+  vertical-align: middle;
 }
 
 legend {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #1a2a4b;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Card-based layout for form fields */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
 .card {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 1.25rem 1.5rem;
+  background-color: #f7f9fc;
+  border: 1px solid #e0e6ed;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Form fields */
@@ -76,24 +94,24 @@ select,
 textarea {
   display: block;
   width: 100%;
-  padding: 0.7rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
   font-family: 'Inter', sans-serif;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
+  border: 1px solid #ccd2e2;
+  border-radius: 8px;
   background: #fff;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 select:focus,
 textarea:focus {
   border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
   outline: none;
 }
 
 textarea#suggestions {
-  min-height: 100px;
+  min-height: 120px;
   resize: vertical;
 }
 
@@ -101,8 +119,8 @@ textarea#suggestions {
 .hint-text {
   display: block;
   font-size: 0.85rem;
-  color: #718096;
-  margin-top: 0.4rem;
+  color: #7b8599;
+  margin-top: 0.5rem;
   font-style: italic;
 }
 
@@ -119,15 +137,15 @@ textarea#suggestions {
 
 .radio-label {
   display: inline-block;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 20px;
+  padding: 0.7rem 1.5rem;
+  border: 2px solid #ccd2e2;
+  border-radius: 50px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  transition: all 0.2s ease;
-  color: #4a5568;
-  background-color: #e2e8f0;
+  transition: all 0.3s ease;
+  color: #555;
+  background-color: #eef2f8;
   user-select: none;
 }
 
@@ -135,34 +153,44 @@ textarea#suggestions {
   background-color: #3b82f6;
   color: #fff;
   border-color: #3b82f6;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .radio-label:hover {
-  background-color: #d1d9e6;
+  border-color: #3b82f6;
 }
 
 /* Button */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 button#generateBtn {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
   width: 100%;
-  max-width: 280px;
-  padding: 0.9rem 1.5rem;
-  font-size: 1rem;
+  max-width: 380px;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  border-radius: 6px;
+  border-radius: 10px;
   background-color: #3b82f6;
   border: none;
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-  margin: 2rem auto 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
 button#generateBtn:hover:not(:disabled) {
   background-color: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
 }
 
 button#generateBtn:disabled {
@@ -186,14 +214,14 @@ button#generateBtn:disabled {
 
 .modal-content {
   background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-  max-width: 360px;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  max-width: 400px;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #1a2a4b;
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -202,22 +230,22 @@ button#generateBtn:disabled {
 }
 
 .error-message {
-  background-color: #fee2e2;
-  color: #dc2626;
-  padding: 0.8rem 1rem;
-  border-radius: 6px;
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 1rem;
+  border-radius: 8px;
   text-align: center;
   margin-top: 1rem;
   font-weight: 600;
-  border: 1px solid #f87171;
+  border: 1px solid #ef5350;
 }
 
 /* Contact info */
 .contact-info {
+  text-align: center;
+  margin-top: 2rem;
   font-size: 0.9rem;
   color: #64748b;
-  text-align: center;
-  margin-top: 2.5rem;
 }
 
 .contact-info a {
@@ -231,13 +259,17 @@ button#generateBtn:disabled {
 }
 
 /* Responsive adjustments */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   main.container {
     padding: 1.5rem;
-    margin-top: 2rem;
+    width: 95%;
   }
-  
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
   h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
