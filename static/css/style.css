@@ -15,32 +15,32 @@ body {
 }
 /* Make all paragraphs bigger and wider */
 p {
-  font-size: 1.25rem;      /* Larger font size */
+  font-size: 1.75rem;      /* Larger font size */
   font-weight: 600;        /* Slightly bolder */
-  letter-spacing: 0.06em;  /* Wider spacing between letters */
+  letter-spacing: 0.07em;  /* Wider spacing between letters */
   color: #333;             /* Darker text color for contrast */
 }
 
 /* Make all legends bigger and bolder */
 legend {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   color: #222;
 }
 
 /* Widen small text (like small hints) and increase font size */
 small {
-  font-size: 1.1rem;
-  letter-spacing: 0.04em;
+  font-size: 1.8rem;
+  letter-spacing: 0.07em;
   color: #555;
   font-weight: 500;
 }
 
 /* Also apply consistent styling to labels */
 label {
-  font-size: 1.15rem;
-  letter-spacing: 0.04em;
+  font-size: 1.8rem;
+  letter-spacing: 0.07em;
   font-weight: 600;
   color: #333;
 }
