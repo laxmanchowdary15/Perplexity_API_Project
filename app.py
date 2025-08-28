@@ -2,7 +2,9 @@ from flask import Flask, render_template, request, Response
 from flask import make_response
 import os
 from openai import OpenAI
-from fpdf import FPDF, XPos, YPos
+from fpdf import FPDF
+from fpdf.enums import XPos, YPos
+
 import re
 
 app = Flask(__name__)
