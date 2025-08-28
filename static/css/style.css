@@ -70,10 +70,10 @@ main.container {
 
 /* Form styles */
 form {
-  width: 100%;
+  width: 200%;
   flex-grow: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 1.8rem;
 }
 
