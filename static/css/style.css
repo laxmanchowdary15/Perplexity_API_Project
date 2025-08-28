@@ -1,30 +1,8 @@
-/* Reset and base */
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', 'Inter', sans-serif;
-  background-color: #eef2f8;
-  color: #333;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-}
-
 /* Main container and layout */
 main.container {
-  width: 90%; /* Use a larger percentage for wider screens */
-  max-width: 1200px; /* Set a max-width to prevent it from getting too wide */
-  padding: 3rem;
+  width: 95%; /* Use a larger percentage for wider screens */
+  max-width: 1400px; /* Increased max-width for better use of space */
+  padding: 2.5rem; /* Reduced padding slightly to save space */
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -38,14 +16,6 @@ main.container {
   margin-bottom: 1rem;
 }
 
-/* Typography and Headings */
-h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: #1a2a4b;
-  margin-bottom: 0.5rem;
-}
-
 .tagline {
   font-size: 1.1rem;
   font-weight: 400;
@@ -53,112 +23,20 @@ h1 {
   margin-bottom: 2rem;
 }
 
-.emoji {
-  font-size: 2.5rem;
-  vertical-align: middle;
-}
-
-legend {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a2a4b;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Card-based layout for form fields */
+/* Form grid layout */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Adjusted min width to prevent narrow columns */
   gap: 1.5rem;
 }
 
+/* Card styles */
 .card {
   background-color: #f7f9fc;
   border: 1px solid #e0e6ed;
   border-radius: 12px;
   padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Form fields */
-form fieldset {
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-select,
-textarea {
-  display: block;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  font-family: 'Inter', sans-serif;
-  border: 1px solid #ccd2e2;
-  border-radius: 8px;
-  background: #fff;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-select:focus,
-textarea:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-  outline: none;
-}
-
-textarea#suggestions {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* Hint text */
-.hint-text {
-  display: block;
-  font-size: 0.85rem;
-  color: #7b8599;
-  margin-top: 0.5rem;
-  font-style: italic;
-}
-
-/* Difficulty Radio Buttons */
-.difficulty-options {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.difficulty-options input[type="radio"] {
-  display: none;
-}
-
-.radio-label {
-  display: inline-block;
-  padding: 0.7rem 1.5rem;
-  border: 2px solid #ccd2e2;
-  border-radius: 50px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  color: #555;
-  background-color: #eef2f8;
-  user-select: none;
-}
-
-.difficulty-options input[type="radio"]:checked + .radio-label {
-  background-color: #3b82f6;
-  color: #fff;
-  border-color: #3b82f6;
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-}
-
-.radio-label:hover {
-  border-color: #3b82f6;
 }
 
 /* Button */
@@ -174,7 +52,7 @@ button#generateBtn {
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  max-width: 380px;
+  max-width: 450px; /* Increased max-width for a wider button */
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
   font-weight: 700;
@@ -187,77 +65,6 @@ button#generateBtn {
   box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
-button#generateBtn:hover:not(:disabled) {
-  background-color: #2563eb;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
-}
-
-button#generateBtn:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Modal and Error messages */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-  max-width: 400px;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #1a2a4b;
-  animation: fadeIn 0.4s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.error-message {
-  background-color: #ffebee;
-  color: #d32f2f;
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  margin-top: 1rem;
-  font-weight: 600;
-  border: 1px solid #ef5350;
-}
-
-/* Contact info */
-.contact-info {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  color: #64748b;
-}
-
-.contact-info a {
-  color: #3b82f6;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.contact-info a:hover {
-  text-decoration: underline;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   main.container {
@@ -267,9 +74,5 @@ button#generateBtn:disabled {
 
   .form-grid {
     grid-template-columns: 1fr;
-  }
-
-  h1 {
-    font-size: 2rem;
   }
 }
