@@ -38,12 +38,12 @@ body {
 
 /* Main container for the entire form */
 main.container {
-  flex: 1;
-  padding: 3rem;
+  flex: 1; /* This will make it grow and fill available space */
+  min-height: 100vh; /* Ensures the container is at least the full height of the viewport */
+  padding: 3rem 5vw; /* Use viewport width for padding to maintain horizontal space */
   background: #ffffff;
   border-radius: 0;
   box-shadow: none;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 2rem;
