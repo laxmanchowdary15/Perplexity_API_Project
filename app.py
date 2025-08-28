@@ -17,17 +17,24 @@ client = OpenAI(
 # -------------------- Generate Paper --------------------
 def generate_paper(subject, chapter, difficulty,suggestions):
     prompt = (
-        f"Create a model paper for class 10 {subject}, "
-        f"{chapter} chapter, difficulty: {difficulty}. Structure as Section A (10x1), B (4x2), "
-        "C (2x4), D (1x4), with suitable questions. Some extra suggestions are "
-        + suggestions + " "
-        "Use plain text and clean mathematical symbols. "
-        "Avoid LaTeX, avoid \\( \\), avoid $$. Use superscripts (x²), fractions (a/b), etc. "
-        "Make questions strictly based difficulty level but add one difficult question in all levels. "
-        "Follow the questions format and syllabus of Andhra Pradesh board for all classes and formats. "
-        "Give response as exam question paper no hint or extra descriptions in response of any kind, "
-        "since response is being printed as pdf."
+        f"Create a model question paper for class 10 {subject}, "
+        f"{chapter} chapter, difficulty level: {difficulty}. "
+        "Structure the paper as follows: "
+        "Section A: 10 questions, 1 mark each; "
+        "Section B: 4 questions, 2 marks each; "
+        "Section C: 2 questions, 4 marks each; "
+        "Section D: 1 question, 4 marks. "
+        "Include suitable questions strictly matching the difficulty level, "
+        "but add one challenging question in each section. "
+        f"Some extra suggestions: {suggestions}. "
+        "Use plain text with clear mathematical symbols, "
+        "such as superscripts (x²) and fractions (a/b). "
+        "Avoid LaTeX notation and delimiters like \\( \\) or $$. "
+        "Follow Andhra Pradesh board syllabus and question format strictly. "
+        "Respond only with the exam questions and heading—no hints, explanations, or extra details, "
+        "as the response will be printed as a PDF."
     )
+
     response = client.chat.completions.create(
         model="sonar-pro",
         messages=[{"role": "user", "content": prompt}]
