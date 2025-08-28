@@ -5,84 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Model Paper Generator</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <main class="container" role="main" aria-labelledby="pageTitle">
   <h1 id="pageTitle" tabindex="0">
-    🎉 Model Paper Generator 🎉 <br />
-    <small>(Just for Class 10 - Stay tuned!) 🚀</small>
+    <span class="emoji">🎉</span> Generate Your Model Paper <span class="emoji">🚀</span>
   </h1>
 
   <form id="paperForm" aria-describedby="formInstructions" novalidate>
     <p id="formInstructions" class="sr-only">Fill in the form below to generate your model paper PDF.</p>
 
-    <!-- Subject Field -->
-    <fieldset>
-      <legend>📚 Choose Your Subject</legend>
-      <label for="subject" class="sr-only">Subject</label>
-      <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
-        <option value="" disabled selected>Pick a subject</option>
-        <option value="Maths">Maths ➗</option>
-        <option value="Science">Science 🔬</option>
-        <option value="Social">Social Studies 🌍</option>
-        <option value="English">English 📖</option>
-      </select>
-      <small id="subjectHint" class="hint-text">Select one subject to proceed</small>
-    </fieldset>
+    <div class="card">
+      <fieldset>
+        <legend>📚 Choose Your Subject</legend>
+        <label for="subject" class="sr-only">Subject</label>
+        <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
+          <option value="" disabled selected>Pick a subject</option>
+          <option value="Maths">Maths ➗</option>
+          <option value="Science">Science 🔬</option>
+          <option value="Social">Social Studies 🌍</option>
+          <option value="English">English 📖</option>
+        </select>
+        <small id="subjectHint" class="hint-text">Select a subject to enable chapter selection</small>
+      </fieldset>
+    </div>
 
-    <!-- Chapter Field -->
-    <fieldset>
-      <legend>📖 Select a Chapter</legend>
-      <label for="chapter" class="sr-only">Chapter</label>
-      <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
-        <option value="" disabled selected>Choose a chapter...</option>
-      </select>
-      <small id="chapterHint" class="hint-text">Choose a chapter based on selected subject</small>
-    </fieldset>
+    <div class="card">
+      <fieldset>
+        <legend>📖 Select a Chapter</legend>
+        <label for="chapter" class="sr-only">Chapter</label>
+        <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
+          <option value="" disabled selected>Choose a chapter...</option>
+        </select>
+        <small id="chapterHint" class="hint-text">Chapters will appear after you choose a subject</small>
+      </fieldset>
+    </div>
 
-    <!-- Difficulty Field -->
-    <fieldset>
-      <legend>🎯 Difficulty Level</legend>
-      <label for="difficulty" class="sr-only">Difficulty</label>
-      <select name="difficulty" id="difficulty" required aria-required="true" aria-describedby="difficultyHint">
-        <option value="easy">Easy Peasy 🍋</option>
-        <option value="moderate" selected>Moderate 🎯</option>
-        <option value="difficult">Challenge Mode 💥</option>
-      </select>
-      <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
-    </fieldset>
+    <div class="card">
+      <fieldset>
+        <legend>🎯 Difficulty Level</legend>
+        <div class="difficulty-options" role="radiogroup" aria-labelledby="difficulty-legend">
+          <input type="radio" id="easy" name="difficulty" value="easy">
+          <label for="easy" class="radio-label">Easy Peasy <span class="emoji">🍋</span></label>
 
-    <!-- Optional Suggestions -->
-    <fieldset>
-      <label for="suggestions">📝 Any extra requirements? (Optional)</label>
-      <textarea name="suggestions" id="suggestions" rows="4" placeholder="Enter any additional notes here..."></textarea>
-    </fieldset>
+          <input type="radio" id="moderate" name="difficulty" value="moderate" checked>
+          <label for="moderate" class="radio-label">Moderate <span class="emoji">🎯</span></label>
 
-    <!-- Submit Button -->
+          <input type="radio" id="difficult" name="difficulty" value="difficult">
+          <label for="difficult" class="radio-label">Challenge Mode <span class="emoji">💥</span></label>
+        </div>
+        <small id="difficultyHint" class="hint-text">Choose the difficulty of the paper</small>
+      </fieldset>
+    </div>
+
+    <div class="card">
+      <label for="suggestions">📝 Any extra requirements? <small>(Optional)</small></label>
+      <textarea name="suggestions" id="suggestions" rows="4" placeholder="e.g., 'Include more short answer questions'"></textarea>
+    </div>
+
     <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
-      Generate PDF &amp; Download 🚀
+      Generate & Download PDF <span class="emoji">⬇️</span>
     </button>
   </form>
 
-  <!-- Contact Info -->
   <p class="contact-info" aria-label="Contact information">
-    🛠️ Issues? Contact <strong>Laxman Nimmagadda</strong> at
+    🛠️ Having issues? Contact <strong>Laxman Nimmagadda</strong> at
     <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
   </p>
 
-  <!-- Modal -->
   <div id="loadingModal" class="modal" role="alertdialog" aria-modal="true" aria-hidden="true" aria-live="assertive">
     <div class="modal-content">⏳ Generating your PDF, please wait...</div>
   </div>
 
-  <!-- Error Message -->
   <div id="errorMessage" class="error-message" role="alert" aria-live="assertive" style="display:none;">
     ❌ Something went wrong. Please try again.
   </div>
 </main>
 
-<!-- JavaScript for dynamic content and form logic -->
 <script>
   const chaptersBySubject = {
     "Maths": [
