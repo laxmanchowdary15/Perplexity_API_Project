@@ -1,82 +1,107 @@
 {% extends "base.html" %}
 
 {% block head %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Model Paper Generator</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
 <main class="container" role="main" aria-labelledby="pageTitle">
-  <h1 id="pageTitle" tabindex="0">🎉 Model Paper Generator 🎉 <small>(Just for Class 10 - Stay tuned!) 🚀</small></h1>
+  <div class="header-section">
+    <h1 id="pageTitle" tabindex="0">
+      <span class="emoji">🧠</span> Model Paper Generator
+    </h1>
+    <p class="tagline">
+      Crafting custom model papers has never been this easy. Let's get started!
+    </p>
+  </div>
 
   <form id="paperForm" aria-describedby="formInstructions" novalidate>
     <p id="formInstructions" class="sr-only">Fill in the form below to generate your model paper PDF.</p>
 
-    <fieldset>
-      <legend>📚 Choose Your Subject</legend>
-      <label for="subject" class="sr-only">Subject</label>
-      <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
-        <option value="" disabled selected>Pick a subject</option>
-        <option value="Maths">Maths ➗</option>
-        <option value="Science">Science 🔬</option>
-        <option value="Social">Social Studies 🌍</option>
-        <option value="English">English 📖</option>
-      </select>
-      <small id="subjectHint" class="hint-text">Select one subject to proceed</small>
-    </fieldset>
+    <div class="form-grid">
+      <div class="card subject-card">
+        <fieldset>
+          <legend><span class="emoji">📚</span> Choose Your Subject</legend>
+          <label for="subject" class="sr-only">Subject</label>
+          <select name="subject" id="subject" required aria-required="true" aria-describedby="subjectHint">
+            <option value="" disabled selected>Pick a subject</option>
+            <option value="Maths">Mathematics</option>
+            <option value="Science">Science</option>
+            <option value="Social">Social Studies</option>
+            <option value="English">English</option>
+          </select>
+          <small id="subjectHint" class="hint-text">Start by picking a subject from the list.</small>
+        </fieldset>
+      </div>
 
-    <fieldset>
-      <legend>📖 Select a Chapter</legend>
-      <label for="chapter" class="sr-only">Chapter</label>
-      <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
-        <option value="" disabled selected>Choose a chapter...</option>
-      </select>
-      <small id="chapterHint" class="hint-text">Choose a chapter based on selected subject</small>
-    </fieldset>
+      <div class="card chapter-card">
+        <fieldset>
+          <legend><span class="emoji">📖</span> Select a Chapter</legend>
+          <label for="chapter" class="sr-only">Chapter</label>
+          <select name="chapter" id="chapter" required aria-required="true" aria-describedby="chapterHint" disabled>
+            <option value="" disabled selected>Choose a chapter...</option>
+          </select>
+          <small id="chapterHint" class="hint-text">This dropdown will fill with chapters for your chosen subject.</small>
+        </fieldset>
+      </div>
+      
+      <div class="card difficulty-card">
+        <fieldset>
+          <legend><span class="emoji">🎯</span> Difficulty Level</legend>
+          <div class="difficulty-options" role="radiogroup" aria-labelledby="difficulty-legend">
+            <input type="radio" id="easy" name="difficulty" value="easy">
+            <label for="easy" class="radio-label">Easy Mode</label>
 
-    <fieldset>
-      <legend>🎯 Difficulty Level</legend>
-      <label for="difficulty" class="sr-only">Difficulty</label>
-      <select name="difficulty" id="difficulty" required aria-required="true" aria-describedby="difficultyHint">
-        <option value="easy">Easy Peasy 🍋</option>
-        <option value="moderate" selected>Moderate 🎯</option>
-        <option value="difficult">Challenge Mode 💥</option>
-      </select>
-      <small id="difficultyHint" class="hint-text">Select difficulty of the paper</small>
-    </fieldset>
+            <input type="radio" id="moderate" name="difficulty" value="moderate" checked>
+            <label for="moderate" class="radio-label">Standard</label>
 
-    <fieldset>
-      <label for="suggestions">📝 Any extra requirements? (Optional)</label>
-      <textarea name="suggestions" id="suggestions" rows="4" placeholder="Enter any additional notes here..."></textarea>
-    </fieldset>
+            <input type="radio" id="difficult" name="difficulty" value="difficult">
+            <label for="difficult" class="radio-label">Hardcore</label>
+          </div>
+          <small id="difficultyHint" class="hint-text">Choose how challenging you want the paper to be!</small>
+        </fieldset>
+      </div>
 
-    <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
-      Generate PDF &amp; Download 🚀
-    </button>
+      <div class="card suggestions-card">
+        <label for="suggestions"><span class="emoji">📝</span> Any extra requests? <small>(Optional)</small></label>
+        <textarea name="suggestions" id="suggestions" rows="4" placeholder="E.g., 'Please focus on algebraic problems'"></textarea>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" id="generateBtn" aria-live="polite" aria-busy="false">
+        Generate & Download Paper <span class="emoji">🚀</span>
+      </button>
+    </div>
   </form>
 
-  <p class="contact-info" aria-label="Contact information">
-    🛠️ Issues? Contact <strong>Laxman Nimmagadda</strong> at
-    <a href="mailto:laxmanchowdary159@gmail.com">laxmanchowdary159@gmail.com</a>
-  </p>
-
-  <!-- Modal -->
-  <div id="loadingModal" class="modal" role="alertdialog" aria-modal="true" aria-hidden="true" aria-live="assertive">
-    <div class="modal-content">⏳ Generating your PDF, please wait...</div>
+  <div class="contact-info">
+    <p>Having trouble? Feel free to <a href="mailto:laxmanchowdary159@gmail.com">drop us a line</a>!</p>
+    <p>Proudly made by <a href="mailto:laxmanchowdary159@gmail.com">Laxman Nimmagadda</a></p>
   </div>
 
-  <!-- Error Message -->
+  <div id="loadingModal" class="modal" role="alertdialog" aria-modal="true" aria-hidden="true" aria-live="assertive">
+    <div class="modal-content">Hold on, we're generating your paper!</div>
+  </div>
+
   <div id="errorMessage" class="error-message" role="alert" aria-live="assertive" style="display:none;">
-    ❌ Something went wrong. Please try again.
+    Uh-oh! Something went wrong. Let's give it another shot.
   </div>
 </main>
 
 <script>
   const chaptersBySubject = {
     "Maths": [
-      "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables", 
-      "Quadratic Equations", "Arithmetic Progressions", "Triangles", 
-      "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry", 
-      "Circles", "Constructions", "Areas Related to Circles", "Surface Areas and Volumes", 
+      "Real Numbers", "Polynomials", "Pair of Linear Equations in Two Variables",
+      "Quadratic Equations", "Arithmetic Progressions", "Triangles",
+      "Coordinate Geometry", "Introduction to Trigonometry", "Some Applications of Trigonometry",
+      "Circles", "Constructions", "Areas Related to Circles", "Surface Areas and Volumes",
       "Statistics", "Probability"
     ],
     "Science": [
